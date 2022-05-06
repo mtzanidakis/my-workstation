@@ -1,22 +1,22 @@
 - hosts: all
-  become: true
   tasks:
     - name: remove background log extension
+      become: true
       dnf:
         name: gnome-shell-extension-background-logo
         state: absent
 
     - name: install gui stuff
+      become: true
       dnf:
         name:
           - dconf-editor
           - gnome-extensions-app
           - gnome-tweaks
+          - jetbrains-mono-fonts
           - python3-psutil
         state: present
 
-- hosts: all
-  tasks:
     - name: set xkb-options
       community.general.dconf:
         key: "/org/gnome/desktop/input-sources/xkb-options"
@@ -70,3 +70,40 @@
         key: "/org/gnome/desktop/session/idle-delay"
         value: "900"
         state: present
+
+    - name: use JetBrains Mono for monospace
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/monospace-font-name"
+        value: "'JetBrains Mono 11'"
+        state: present
+
+    - name: terminal shortcut name
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+        value: "'Terminal'"
+    - name: terminal shortcut command
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+        value: "'gnome-terminal'"
+    - name: terminal shortcut binding
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+        value: "'<Super>Return'"
+
+    - name: firefox shortcut name
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name"
+        value: "'Firefox'"
+    - name: firefox shortcut command
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
+        value: "'firefox'"
+    - name: firefox shortcut binding
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
+        value: "'<Shift><Super>f'"
+
+    - name: enable custom keybindings
+      dconf:
+        key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+        value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
