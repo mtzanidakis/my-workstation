@@ -206,10 +206,8 @@ which fortune >/dev/null 2>&1 && echo -e "\n$(fortune -a)\n"
 
 ## fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-_fzfkeys=/usr/share/fzf/key-bindings.zsh
-_fzfcomp=/usr/share/fzf/completion.zsh
+_fzfkeys=/usr/share/fzf/shell/key-bindings.zsh
 [[ -f ${_fzfkeys} ]] && source ${_fzfkeys}
-[[ -f ${_fzfcomp} ]] && source ${_fzfcomp}
 
 # zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60"
