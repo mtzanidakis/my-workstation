@@ -1,0 +1,48 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: remove background log extension
+      dnf:
+        name: gnome-shell-extension-background-logo
+        state: absent
+
+    - name: install gui stuff
+      dnf:
+        name:
+          - dconf-editor
+          - gnome-extensions-app
+          - gnome-tweaks
+          - python3-psutil
+        state: present
+
+- hosts: all
+  tasks:
+    - name: set xkb-options
+      community.general.dconf:
+        key: "/org/gnome/desktop/input-sources/xkb-options"
+        value: "['grp:alt_shift_toggle', 'ctrl:nocaps', 'grp_led:caps', 'terminate:ctrl_alt_bksp']"
+        state: present
+
+    - name: use dark theme
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/color-scheme"
+        value: "'prefer-dark'"
+        state: present
+
+    - name: show weekday in topbar
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/clock-show-weekday"
+        value: "true"
+        state: present
+
+    - name: use rgba font antialiasing
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/font-antialiasing"
+        value: "'rgba'"
+        state: present
+
+    - name: show battery percentage
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/show-battery-percentage"
+        value: "true"
+        state: present
