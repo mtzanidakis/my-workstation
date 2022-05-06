@@ -6,8 +6,11 @@
       ansible.builtin.dnf:
         name:
           - fortune-mod
+          - fzf
+          - htop
           - keychain
           - neovim
+          - ripgrep
           - vim-enhanced
           - zsh
           - zsh-autosuggestions
