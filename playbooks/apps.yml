@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install bitwarden
+      community.general.flatpak:
+        remote: flathub
+        name: com.bitwarden.desktop
+        state: present
