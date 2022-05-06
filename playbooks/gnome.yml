@@ -46,3 +46,27 @@
         key: "/org/gnome/desktop/interface/show-battery-percentage"
         value: "true"
         state: present
+
+    - name: no event sounds
+      community.general.dconf:
+        key: "/org/gnome/desktop/sound/event-sounds"
+        value: "false"
+        state: present
+
+    - name: disable automatic suspend
+      community.general.dconf:
+        key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
+        value: "'nothing'"
+        state: present
+
+    - name: power button interactive mode
+      community.general.dconf:
+        key: "/org/gnome/settings-daemon/plugins/power/power-button-action"
+        value: "'interactive'"
+        state: present
+
+    - name: set idle delay (screen blank) to 15mins
+      community.general.dconf:
+        key: "/org/gnome/desktop/session/idle-delay"
+        value: "900"
+        state: present
