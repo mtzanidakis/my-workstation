@@ -1,6 +1,7 @@
 - import_playbook: ./playbooks/repos.yml
 - import_playbook: ./playbooks/base.yml
-- import_playbook: ./playbooks/apps.yml
+- import_playbook: ./playbooks/productivity.yml
+- import_playbook: ./playbooks/multimedia.yml
 - import_playbook: ./playbooks/golang.yml
 - import_playbook: ./playbooks/user.yml
 - import_playbook: ./playbooks/gnome.yml
