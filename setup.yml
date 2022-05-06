@@ -1,12 +1,10 @@
-- hosts: localhost
-  connection: local
+- hosts: all
   tasks:
     - name: save username
       ansible.builtin.shell: whoami
       register: username
 
-- hosts: localhost
-  connection: local
+- hosts: all
   become: true
 
   tasks:
