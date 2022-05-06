@@ -5,6 +5,7 @@
     - name: install packages
       ansible.builtin.dnf:
         name:
+          - bat
           - fortune-mod
           - fzf
           - htop
