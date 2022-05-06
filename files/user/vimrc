@@ -1,0 +1,159 @@
+filetype off
+
+" install https://github.com/junegunn/vim-plug
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'altercation/vim-colors-solarized'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'scrooloose/syntastic'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'junegunn/fzf.vim'
+call plug#end()
+
+set nocompatible
+set modelines=0
+
+set encoding=utf-8
+set scrolloff=3
+set autoindent
+set copyindent
+set showmode
+set showcmd
+set hidden
+set wildmenu
+set wildmode=list:longest
+set visualbell
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set laststatus=2
+set number
+set undofile
+set history=1000
+set title
+
+" search/move
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+
+" leader commands
+let mapleader = ","
+nmap <silent> <leader><space> :silent :nohlsearch<CR>
+
+" wrap long lines
+set wrap
+set textwidth=0
+
+" show invisible characters like textmate
+set list
+set listchars=tab:▸\ ,eol:¬
+
+" get rid of help key
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" Resize splits when the window is resized
+au VimResized * exe "normal! \<c-w>="
+
+filetype plugin indent on
+
+augroup vimrc_autocmd
+	autocmd!
+
+	" jump to the last position when reopening a file
+	autocmd BufReadPost *
+		\ if line("'\"") > 1 && line("'\"") <= line("$") |
+		\   exe "normal! g`\"" |
+		\ endif
+augroup END
+
+augroup filetypedetect
+	" mutt
+	autocmd BufRead,BufNewFile *mutt-* setfiletype mail
+augroup END
+
+" set backups
+set undodir=~/.vim/tmp/undo
+set backupdir=~/.vim/tmp/backup
+set directory=~/.vim/tmp/swap
+set backup
+set backupskip=/etc/*,/usr/local/etc/*,/tmp/*,/var/tmp/*,*secret*,mutt*
+
+" skip undo on gopass files
+au BufWritePre /tmp/gopass-edit* setlocal noundofile
+
+" color scheme
+syn on
+set background=dark
+colorscheme solarized
+
+if has('gui_running')
+	set guiheadroom=0 " remove empty space at the bottom of gvim
+	set guifont=JetBrainsMono\ 10
+	set guioptions=c " remove menu and toolbar
+endif
+
+" mouse and cursor(lines+columns)
+set mousehide
+set mouse=a
+set cursorline
+set cursorcolumn
+
+" status line
+set statusline=%F    " Path.
+set statusline+=%m   " Modified flag.
+set statusline+=%r   " Readonly flag.
+set statusline+=%w   " Preview window flag.
+set statusline+=\    " Space.
+set statusline+=%#warningmsg#   " Highlight the following as a warning.
+set statusline+=%{SyntasticStatuslineFlag()} " Syntastic errors.
+set statusline+=%*                           " Reset highlighting.
+set statusline+=%=   " Right align.
+
+" file format, encoding and type.
+set statusline+=[%{&ff},
+set statusline+=%{strlen(&fenc)?&fenc:&enc}
+set statusline+=,%{&ft}]
+set statusline+=[%l\/%L,%v]
+
+" syntastic
+nmap <silent><leader>e :Errors<CR>
+
+" vim-go: format with goimports on save
+let g:go_fmt_command = "goimports"
+
+au BufRead /tmp/mutt-* set tw=72
+
+" fzf.vim
+nnoremap <C-p> :GFiles<Cr>
+
+" virtual tabstops using spaces
+set shiftwidth=8
+set softtabstop=0
+set noexpandtab
+
+" allow toggling between local and default mode
+function TabToggle()
+	if &expandtab
+		set shiftwidth=8
+		set softtabstop=0
+		set noexpandtab
+	else
+		set shiftwidth=4
+		set softtabstop=4
+		set expandtab
+	endif
+endfunction
+nmap <F9> mz:execute TabToggle()<CR>'z

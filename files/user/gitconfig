@@ -1,0 +1,22 @@
+[user]
+	name = Manolis Tzanidakis
+	email = mtzanidakis@gmail.com
+
+[core]
+	editor = vim
+
+[log]
+	date = iso8601
+
+[pull]
+	rebase = false
+
+[fetch]
+	prune = true
+
+[diff]
+	colorMoved = zebra
+
+[alias]
+	retag = "!f() { git tag -f -a \"$1\" -m \"$1\" && git push origin \"$1\" -f; }; f"
+	deltag = "!f() { git tag -d \"$1\" && git push --delete origin \"$1\"; }; f"

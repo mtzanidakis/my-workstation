@@ -1,0 +1,40 @@
+- hosts: all
+  tasks:
+    - name: save user
+      ansible.builtin.shell: whoami
+      register: whoami
+
+- hosts: all
+  become: true
+  vars:
+    filesdir: ../files/user
+    username: "{{ whoami.stdout }}"
+    homedir: "/home/{{ username }}"
+
+  tasks:
+    - name: set zsh as user shell
+      ansible.builtin.user:
+        name: "{{ username }}"
+        shell: /bin/zsh
+
+    - name: "add dotfiles for {{ username }}"
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
+      loop:
+        - {src: "{{ filesdir }}/gitconfig", dest: "{{ homedir }}/.gitconfig"}
+        - {src: "{{ filesdir }}/tmux.conf", dest: "{{ homedir }}/.tmux.conf"}
+        - {src: "{{ filesdir }}/vimrc", dest: "{{ homedir }}/.vimrc"}
+        - {src: "{{ filesdir }}/zshrc", dest: "{{ homedir }}/.zshrc"}
+
+    - name: "create vim directories for {{ username }}"
+      ansible.builtin.file:
+        path: "{{ homedir }}/.vim/{{ item }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        state: directory
+        mode: 0755
+      loop: ['autoload', 'tmp/backup', 'tmp/swap', 'tmp/undo']

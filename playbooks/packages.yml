@@ -1,0 +1,14 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install packages
+      ansible.builtin.dnf:
+        name:
+          - fortune-mod
+          - keychain
+          - neovim
+          - vim-enhanced
+          - zsh
+          - zsh-autosuggestions
+        state: present

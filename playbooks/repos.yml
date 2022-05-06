@@ -1,10 +1,4 @@
 - hosts: all
-  tasks:
-    - name: save username
-      ansible.builtin.shell: whoami
-      register: username
-
-- hosts: all
   become: true
 
   tasks:

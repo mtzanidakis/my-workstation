@@ -1,0 +1,228 @@
+umask 022
+
+## completion
+zstyle ":completion:*:commands" rehash 1
+zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*' completer _complete _correct
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' menu select
+zstyle ':completion:*:sudo:*' command-path /bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin
+
+## load modules
+autoload -U compinit && compinit
+autoload -U edit-command-line
+autoload -U zed
+autoload -U colors && colors
+autoload -Uz vcs_info
+autoload history-search-end
+autoload run-help
+
+# quote pasted URLs
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
+## history options
+setopt SHARE_HISTORY
+setopt append_history
+setopt histignorealldups
+setopt histignorespace
+setopt extended_history
+setopt always_to_end
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=5000
+SAVEHIST=5000
+export HISTFILE HISTSIZE SAVEHIST
+
+# don't stop background processes on exit
+setopt NO_HUP
+
+## bindkeys
+bindkey '^[[2~' overwrite-mode
+bindkey '^[[3~' delete-char
+bindkey '^[[5~' up-line-or-history
+bindkey '^[[6~' down-line-or-history
+bindkey '^[[7~' beginning-of-line
+bindkey '^[[8~' end-of-line
+bindkey '^[,'   insert-last-word
+bindkey ' '     magic-space
+bindkey '^I'    complete-word
+bindkey "^[[A"  history-search-backward
+bindkey "^[[B"  history-search-forward
+
+# xterms
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+
+# unbind c-s and c-q
+stty -ixon
+
+## misc options
+# mute beep
+unsetopt beep
+
+# use vi key binginds
+set -o vi
+
+## PATHs
+# default PATH
+PATH=$HOME/bin:/usr/local/bin:/bin:/usr/local/sbin:/sbin:/usr/bin:/usr/sbin
+
+# extra directories to include in PATH if they exist
+[[ -d /usr/games ]] && PATH=$PATH:/usr/games
+[[ /usr/X11R6/bin ]] && PATH=$PATH:/usr/X11R6/bin
+
+ # dynamic prompt
+setopt prompt_subst
+
+# vcs_info
+function precmd() { vcs_info }
+zstyle ':vcs_info:*' formats '[%b]'
+
+# k8s
+_kubectl_p=~/.local/share/zsh-kubectl-prompt/kubectl.zsh
+[[ -f ${_kubectl_p} ]] && source ${_kubectl_p}
+
+function left_prompt() {
+	local _p="%{$fg[yellow]%}${vcs_info_msg_0_}%{$reset_color%}\n%n@%m:%~%# "
+	[[ $ZSH_KUBECTL_PROMPT ]] && {
+		local _c=blue;
+		[[ $ZSH_KUBECTL_NAMESPACE == "production" ]] && _c=red;
+		_p="%{$fg[${_c}]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%} ${_p}";
+	}
+	echo ${_p}
+}
+
+PROMPT='$(left_prompt)'
+
+## editor (vim or vi)
+export EDITOR=vim
+
+## OS-specific configuration
+case "`uname -s`" in
+	Linux)
+		# ls colors (solarized)
+		[[ $TERM = "xterm-256color" ]] &&
+			export LS_COLORS="di=00;34:ln=00;35:so=00;32:pi=01;33:ex=00;31:bd=00;34"
+
+		export LS_OPTIONS='--color=auto -F'
+		alias ls="ls $LS_OPTIONS"
+
+		# show matched exp's in green on grep
+		export GREP_COLOR=32
+		alias grep='grep --color=auto'
+
+		# archlinux-specific configuration
+		[[ -e /etc/arch-release ]] && . /etc/profile
+
+		# enable colored syntax-highlighting
+		export LESS=-R
+
+		# debian-specific configuration
+		[[ -e /etc/debian_version ]] && eval `lesspipe`
+	;;
+	OpenBSD)
+		export LC_CTYPE="en_US.UTF-8"
+		export CVSROOT="anoncvs@anoncvs.fr.openbsd.org:/cvs"
+
+		# lesspipe
+		if [ -x /usr/local/bin/lesspipe ]; then
+			export LESSOPEN="| lesspipe %s"
+		fi
+
+		alias ls='ls -Fh'
+		alias port_upg='cd /usr/ports; cvs -d $CVSROOT -q up -Pd'
+		alias src_upg='cd /usr/src; cvs -d $CVSROOT -q up -Pd'
+		alias check_ports='( cd /usr/ports/infrastructure/build; \
+			./out-of-date )'
+        ;;
+	Darwin)
+		# ls colors (solarized)
+		if [ $TERM = "xterm-256color" ]; then
+			export LSCOLORS="gxfxbEaEBxxEhEhBaDaCaD"
+		fi
+
+		alias ls='ls -FG'
+
+		# lesspipe
+		if [ -x /usr/local/bin/lesspipe.sh ]; then
+			export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" \
+				LESS_ADVANCED_PREPROCESSOR=1
+		fi
+        ;;
+esac
+
+## aliases
+alias cp='nocorrect cp -i'
+alias rm='nocorrect rm -i'
+alias mv='nocorrect mv -i'
+alias du='du -hsc'
+alias df='df -h'
+alias mkdir='nocorrect mkdir'
+alias dmesg='dmesg -HT'
+alias confcat="sed -e 's/[#;].*//;/^\s*$/d' "$@""
+alias weather='curl -s "https://wttr.in/Cholargos?format=3"'
+alias whatsmyip='dig -4 +short myip.opendns.com @resolver1.opendns.com'
+alias whatsmyip2='curl -s https://ipinfo.io'
+alias exa="exa -F"
+alias gti="git"
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias kgi='kubectl get ingress'
+alias kdp='kubectl describe pod'
+alias kdi='kubectl describe ingress'
+alias kns='kubens'
+alias kctx='kubectx'
+alias kingtail='kubectl logs -f -n default daemonsets.apps/nginx-ingress-nginx-controller'
+alias lwdc="docker-compose -f docker-compose.yml \
+	-f docker-compose.override.yml \
+	-f extra/website.yml \
+	-f extra/account.yml \
+	-f extra/adminer.yml \
+	-f extra/mailhog.yml \
+	-f extra/scorm.yml \
+	-f extra/lwdemomaker.yml \
+	-f extra/iplocate.yml \
+	-f extra/mobapplinker.yml \
+	-f extra/pdfservice.yml"
+alias lwdctail="lwdc logs --no-log-prefix --no-color -f "
+alias doco='docker-compose'
+
+# XXX: temporary until tableplus is fixed on arch
+alias tableplus="LD_PRELOAD=/opt/tableplus/lib/libldap-2.5.so.0.1.1:/opt/tableplus/lib/liblber-2.5.so.0.1.1:/opt/tableplus/lib/libsasl2.so.2.0.25:/opt/tableplus/lib/libgio-2.0.so.0.6800.4 /usr/local/bin/tableplus"
+
+## functions
+function kwide {
+	kubectl $@ -o wide
+}
+
+function ktail {
+	_app=$1; shift
+	kubectl logs --prefix -f -l app=${_app} $@
+}
+
+# fortune cookie
+which fortune >/dev/null 2>&1 && echo -e "\n$(fortune -a)\n"
+
+## fzf
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+_fzfkeys=/usr/share/fzf/key-bindings.zsh
+_fzfcomp=/usr/share/fzf/completion.zsh
+[[ -f ${_fzfkeys} ]] && source ${_fzfkeys}
+[[ -f ${_fzfcomp} ]] && source ${_fzfcomp}
+
+# zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60"
+_autosuggest=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f ${_autosuggest} ]] && source ${_autosuggest}
+
+## keychain (start on first connection (and timeout after 120 mins)
+[[ -z "${SSH_CLIENT}" && $(which keychain) ]] &&
+	eval $(keychain -q --eval --agents gpg,ssh --timeout 120 \
+		id_{ed25519,rsa} github_ed25519)
+
+## go
+if [[ -d $HOME/go ]]; then
+	export GOPATH=$HOME/go
+	PATH=$GOPATH/bin:$PATH
+fi

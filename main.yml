@@ -1,0 +1,3 @@
+- import_playbook: ./playbooks/repos.yml
+- import_playbook: ./playbooks/packages.yml
+- import_playbook: ./playbooks/user.yml
