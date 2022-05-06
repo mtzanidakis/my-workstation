@@ -1,0 +1,11 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install develop packages
+      ansible.builtin.dnf:
+        name:
+          - neovim
+          - sqlite
+          - zeal
+          - vim-enhanced
