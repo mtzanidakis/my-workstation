@@ -1,3 +1,4 @@
 - import_playbook: ./playbooks/repos.yml
-- import_playbook: ./playbooks/packages.yml
+- import_playbook: ./playbooks/base.yml
+- import_playbook: ./playbooks/golang.yml
 - import_playbook: ./playbooks/user.yml

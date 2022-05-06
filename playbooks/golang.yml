@@ -1,0 +1,42 @@
+- hosts: all
+  become: true
+  vars:
+    go_version: 1.18.1
+    go_sha256: b3b815f47ababac13810fc6021eb73d65478e0b2db4b09d348eefad9581a2334
+
+  tasks:
+    - name: check if go is already installed
+      ansible.builtin.stat:
+        path: /usr/local/go
+      register: usrlocalgo
+
+    - name: debug
+      ansible.builtin.debug:
+        var: usrlocalgo
+
+    - name: "download go {{ go_version }}"
+      ansible.builtin.get_url:
+        url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+        dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+        mode: 0644
+        checksum: "sha256:{{ go_sha256 }}"
+      when: usrlocalgo is defined and usrlocalgo.stat.exists == false
+
+    - name: "unpack go {{ go_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+        dest: /usr/local
+      when: usrlocalgo is defined and usrlocalgo.stat.exists == false
+
+    - name: "delete downloaded go {{ go_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+        state: absent
+      when: usrlocalgo is defined and usrlocalgo.stat.exists == false
+
+    - name: add /usr/local/go in global path
+      ansible.builtin.lineinfile:
+        path: /etc/profile.d/golang.sh
+        line: 'export PATH=$PATH:/usr/local/go/bin'
+        create: yes
+
