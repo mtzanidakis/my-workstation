@@ -43,3 +43,8 @@
           - mpv
           - obs-studio
           - vlc
+
+    - name: install spotify
+      community.general.flatpak:
+        name: com.spotify.Client
+        state: present
