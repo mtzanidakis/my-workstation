@@ -10,10 +10,6 @@
         path: /usr/local/go
       register: usrlocalgo
 
-    - name: debug
-      ansible.builtin.debug:
-        var: usrlocalgo
-
     - name: "download go {{ go_version }}"
       ansible.builtin.get_url:
         url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
