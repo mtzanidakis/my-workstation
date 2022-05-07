@@ -2,15 +2,13 @@
   become: true
 
   tasks:
-    - name: check if fedora-cisco-openh264 repo is enabled
-      ansible.builtin.shell:
-        cmd: dnf repolist enabled | awk '/fedora-cisco-openh264/'
-      register: openh264_repo_installed
-
-    - name: enable fedora-cisco-openh264 repo
-      ansible.builtin.shell:
-        cmd: dnf config-manager --set-enabled fedora-cisco-openh264
-      when: openh264_repo_installed.stdout == ""
+    - name: ensure fedora-cisco-openh264 repo is enabled
+      community.general.ini_file:
+        path: /etc/yum.repos.d/fedora-cisco-openh264.repo
+        section: fedora-cisco-openh264
+        option: enabled
+        value: 1
+        no_extra_spaces: yes
 
     - name: install media plugins
       ansible.builtin.dnf:
