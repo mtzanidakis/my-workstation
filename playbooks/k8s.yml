@@ -33,10 +33,11 @@
           - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
         gpgcheck: yes
 
-    - name: install google-cloud-cli & kubectl
+    - name: install google-cloud-cli, helm & kubectl
       ansible.builtin.dnf:
         name:
           - google-cloud-cli
+          - helm
           - kubectl
 
     - name: check if kubectx is installed
