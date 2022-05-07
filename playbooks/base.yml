@@ -39,7 +39,11 @@
           - fzf
           - htop
           - keychain
+          - ncdu
+          - pwgen
+          - restic
           - ripgrep
+          - sshfs
           - zsh
           - zsh-autosuggestions
         state: present
