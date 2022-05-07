@@ -104,6 +104,7 @@
       ansible.builtin.unarchive:
         src: "/tmp/kubens_v{{ kubectx_version }}_linux_x86_64.tar.gz"
         dest: /usr/local/bin
+        mode: 0644
         include: kubens
         owner: root
         group: root
@@ -159,7 +160,7 @@
         state: directory
         mode: 0755
 
-    - name: "add k9s view for {{ username}}"
+    - name: "add k9s view for {{ username }}"
       ansible.builtin.copy:
         src: "{{ filesdir }}/k9s-views.yml"
         dest: "{{ homedir }}/.config/k9s/views.yml"
