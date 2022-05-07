@@ -16,6 +16,7 @@
         name:
           - code
           - neovim
+          - python3-ansible-lint
           - sqlite
           - zeal
           - vim-enhanced
