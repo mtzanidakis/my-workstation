@@ -1,8 +1,17 @@
 - hosts: all
+  vars:
+    username: "{{ whoami.stdout }}"
+    homedir: "/home/{{ username }}"
+
   tasks:
     - name: save user
       ansible.builtin.shell: whoami
       register: whoami
+
+    - name: "add zsh-kubectl-promt for {{ username }}"
+      ansible.builtin.git:
+        repo: git@github.com:superbrothers/zsh-kubectl-prompt.git
+        dest: "{{ homedir }}/.local/share/zsh-kubectl-prompt"
 
 - hosts: all
   become: true
