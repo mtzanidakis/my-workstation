@@ -26,11 +26,6 @@
         state: present
         flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
-    - name: update appstream metadata
-      ansible.builtin.dnf:
-        name: '@core'
-        state: latest
-
     - name: install base packages
       ansible.builtin.dnf:
         name:

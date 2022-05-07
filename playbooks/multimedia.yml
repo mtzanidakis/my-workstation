@@ -28,10 +28,6 @@
           - gstreamer1-plugins-bad-free-devel
           - lame-devel
 
-    - name: upgrade with media libs
-      ansible.builtin.shell:
-        cmd: dnf group upgrade --with-optional Multimedia -y
-
     - name: install media apps
       ansible.builtin.dnf:
         name:
