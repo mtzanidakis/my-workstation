@@ -68,7 +68,7 @@
     - name: set idle delay (screen blank) to 15mins
       community.general.dconf:
         key: "/org/gnome/desktop/session/idle-delay"
-        value: "900"
+        value: "uint32 900"
         state: present
 
     - name: use JetBrains Mono for monospace
