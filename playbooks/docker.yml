@@ -8,6 +8,10 @@
   become: true
   vars:
     username: "{{ whoami.stdout }}"
+    ctop_version: 0.7.7
+    ctop_checksum: sha256:b78374734ebe3d14b6edee3d5512c911c250d7fa7f3f964cb00acd3bc5a02a09
+    switch_version: 1.0.4
+    switch_checksum: sha256:08229ed196de5ce08228d194e2e2379cb6cb7959fe8dfe70859352d2fd9d21a5
 
   tasks:
     - name: enable Docker CE stable repo
@@ -38,3 +42,17 @@
         name: "{{ username }}"
         groups: docker
         append: true
+
+    - name: install ctop
+      ansible.builtin.get_url:
+        url: "https://github.com/bcicen/ctop/releases/download/v{{ ctop_version }}/ctop-{{ ctop_version }}-linux-amd64"
+        dest: /usr/local/bin/ctop
+        checksum: "{{ ctop_checksum }}"
+        mode: 0755
+
+    - name: install compose-switch
+      ansible.builtin.get_url:
+        url: "https://github.com/docker/compose-switch/releases/download/v{{ switch_version }}/docker-compose-linux-amd64"
+        dest: /usr/local/bin/docker-compose
+        checksum: "{{ switch_checksum }}"
+        mode: 0755
