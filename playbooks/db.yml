@@ -18,3 +18,13 @@
         - mongodb-database-tools
         - mongodb-mongosh
       state: present
+
+  - name: install pgcli
+    ansible.builtin.dnf:
+      name: pgcli
+      state: present
+
+  - name: install mycli
+    ansible.builtin.dnf:
+      name: mycli
+      state: present
