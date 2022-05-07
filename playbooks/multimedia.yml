@@ -9,6 +9,7 @@
         option: enabled
         value: 1
         no_extra_spaces: yes
+        mode: 0644
 
     - name: install media plugins
       ansible.builtin.dnf:
