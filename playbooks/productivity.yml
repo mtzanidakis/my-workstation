@@ -2,13 +2,37 @@
   become: true
 
   tasks:
-    - name: install bitwarden
+    - name: install Bitwarden
       community.general.flatpak:
         remote: flathub
         name: com.bitwarden.desktop
         state: present
 
-    - name: install chrome
+    - name: install Chrome
       ansible.builtin.dnf:
         name: google-chrome-stable
+        state: present
+
+    # re-enable after 36 release; currently broken
+    # - name: install nextcloud-client
+    #   ansible.builtin.dnf:
+    #     name: nextcloud-client
+    #     state: present
+
+    - name: install Discord
+      community.general.flatpak:
+        remote: flathub
+        name: com.discordapp.Discord
+        state: present
+
+    - name: install Slack
+      community.general.flatpak:
+        remote: flathub
+        name: com.slack.Slack
+        state: present
+
+    - name: install Zoom
+      community.general.flatpak:
+        remote: flathub
+        name: us.zoom.Zoom
         state: present
