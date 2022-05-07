@@ -35,6 +35,7 @@
       ansible.builtin.dnf:
         name:
           - bat
+          - cu
           - fortune-mod
           - fzf
           - htop
@@ -43,7 +44,9 @@
           - pwgen
           - restic
           - ripgrep
+          - solaar
           - sshfs
+          - transmission
           - zsh
           - zsh-autosuggestions
         state: present
