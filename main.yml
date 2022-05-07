@@ -2,7 +2,8 @@
 - import_playbook: ./playbooks/docker.yml
 - import_playbook: ./playbooks/develop.yml
 - import_playbook: ./playbooks/golang.yml
-- import_playbook: ./playbooks/productivity.yml
+- import_playbook: ./playbooks/chat.yml
 - import_playbook: ./playbooks/multimedia.yml
+- import_playbook: ./playbooks/productivity.yml
 - import_playbook: ./playbooks/user.yml
 - import_playbook: ./playbooks/gnome.yml

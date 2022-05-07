@@ -1,0 +1,15 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install Viber
+      community.general.flatpak:
+        remote: flathub
+        name: com.viber.Viber
+        state: present
+
+    - name: install Signal
+      community.general.flatpak:
+        remote: flathub
+        name: org.signal.Signal
+        state: present
