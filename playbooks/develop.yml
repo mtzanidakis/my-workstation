@@ -15,6 +15,7 @@
       ansible.builtin.dnf:
         name:
           - code
+          - direnv
           - neovim
           - python3-ansible-lint
           - sqlite
