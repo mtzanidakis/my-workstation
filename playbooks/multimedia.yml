@@ -42,6 +42,7 @@
           - kdenlive
           - mpv
           - obs-studio
+          - pavucontrol
           - vlc
 
     - name: install spotify
