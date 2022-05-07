@@ -20,7 +20,7 @@
     - name: set xkb-options
       community.general.dconf:
         key: "/org/gnome/desktop/input-sources/xkb-options"
-        value: "['grp:alt_shift_toggle', 'ctrl:nocaps', 'grp_led:caps', 'terminate:ctrl_alt_bksp']"
+        value: "['ctrl:nocaps', 'grp_led:caps', 'terminate:ctrl_alt_bksp']"
         state: present
 
     - name: use dark theme
