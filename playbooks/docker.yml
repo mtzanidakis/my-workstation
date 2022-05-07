@@ -1,0 +1,40 @@
+- hosts: all
+  tasks:
+    - name: save user
+      ansible.builtin.shell: whoami
+      register: whoami
+
+- hosts: all
+  become: true
+  vars:
+    username: "{{ whoami.stdout }}"
+
+  tasks:
+    - name: enable Docker CE stable repo
+      ansible.builtin.yum_repository:
+        name: docker-ce-stable
+        description: Docker CE stable repo
+        file: docker-ce
+        baseurl: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
+        gpgkey: 'https://download.docker.com/linux/fedora/gpg'
+        gpgcheck: yes
+
+    - name: install Docker CE
+      ansible.builtin.dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+
+    - name: enable Docker
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: "add {{ username }} to docker group"
+      ansible.builtin.user:
+        name: "{{ username }}"
+        groups: docker
+        append: true
