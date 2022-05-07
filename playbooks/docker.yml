@@ -28,6 +28,13 @@
           - containerd.io
           - docker-compose-plugin
 
+    - name: enable BuildKit
+      ansible.builtin.lineinfile:
+        path: /etc/docker/daemon.json
+        line: '{ "features": { "buildkit": true } }'
+        mode: 0644
+        create: yes
+
     - name: enable Docker
       ansible.builtin.systemd:
         name: docker
