@@ -1,7 +1,15 @@
-# install google-sdk, kubectl, k9s, helm etc
+- hosts: all
+  tasks:
+    - name: save user
+      ansible.builtin.shell: whoami
+      register: whoami
+
 - hosts: all
   become: true
   vars:
+    filesdir: ../files/k8s
+    username: "{{ whoami.stdout }}"
+    homedir: "/home/{{ username }}"
     kubectx_version: 0.9.4
     kubectx_checksum: sha256:db5a48e85ff4d8c6fa947e3021e11ba4376f9588dd5fa779a80ed5c18287db22
     kubectx_bin_checksum: 9317271d6dd7c771c844d9d3b37a7e56c5d74c6e53366aa230ced3fb69d128bc
@@ -9,6 +17,9 @@
     kubens_checksum: sha256:8b3672961fb15f8b87d5793af8bd3c1cca52c016596fbf57c46ab4ef39265fcd
     kubens_bin_checksum: cc376ced21b441efe4d61685830e0ff3ade194c303216d1ca08b72073c556d44
     kubens_comp_checksum: sha256:084c226035af951e582020b2bc055a6521929ee54d8942b4d19577e5d45fd8f7
+    k9s_version: 0.25.18
+    k9s_checksum: sha256:d288aacc368ab6b243fc9e7ecd17b53fa34a813509c2dc3023171085db83cf9d
+    k9s_bin_checksum: eabb69c297a459f85e530ae84d682f2be321c1b7c607aa6d5dad113b1ceb11cb
 
   tasks:
     - name: enable Google Cloud SDK repo
@@ -99,3 +110,48 @@
         dest: "/usr/share/zsh/site-functions"
         mode: 0644
         checksum: "{{ kubens_comp_checksum }}"
+
+    - name: check if k9s is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/k9s
+        checksum_algorithm: sha256
+      register: localbink9s
+
+    - name: "download k9s {{ k9s_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/derailed/k9s/releases/download/v{{ k9s_version }}/k9s_Linux_x86_64.tar.gz"
+        dest: "/tmp/k9s_Linux_x86_64.tar.gz"
+        mode: 0644
+        checksum: "{{ k9s_checksum }}"
+      when: localbink9s.stat.checksum is not defined or localbink9s.stat.checksum != k9s_bin_checksum
+
+    - name: "unpack k9s {{ k9s_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/k9s_Linux_x86_64.tar.gz"
+        dest: /usr/local/bin
+        include: k9s
+        owner: root
+        group: root
+      when: localbink9s.stat.checksum is not defined or localbink9s.stat.checksum != k9s_bin_checksum
+
+    - name: "delete downloaded k9s {{ k9s_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/k9s_Linux_x86_64.tar.gz"
+        state: absent
+      when: localbink9s.stat.checksum is not defined or localbink9s.stat.checksum != k9s_bin_checksum
+
+    - name: create k9s config dir
+      ansible.builtin.file:
+        path: "{{ homedir }}/.config/k9s"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        state: directory
+        mode: 0755
+
+    - name: "add k9s view for {{ username}}"
+      ansible.builtin.copy:
+        src: "{{ filesdir }}/k9s-views.yml"
+        dest: "{{ homedir }}/.config/k9s/views.yml"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
