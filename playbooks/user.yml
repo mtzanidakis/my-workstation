@@ -1,14 +1,8 @@
 - hosts: all
-  tasks:
-    - name: save user
-      ansible.builtin.shell: whoami
-      register: whoami
-
-- hosts: all
   become: true
   vars:
     filesdir: ../files/user
-    username: "{{ whoami.stdout }}"
+    username: "{{ lookup('env', 'USERNAME') }}"
     homedir: "/home/{{ username }}"
 
   tasks:

@@ -1,13 +1,7 @@
 - hosts: all
-  tasks:
-    - name: save user
-      ansible.builtin.shell: whoami
-      register: whoami
-
-- hosts: all
   become: true
   vars:
-    username: "{{ whoami.stdout }}"
+    username: "{{ lookup('env', 'USERNAME') }}"
     ctop_version: 0.7.7
     ctop_checksum: sha256:b78374734ebe3d14b6edee3d5512c911c250d7fa7f3f964cb00acd3bc5a02a09
     switch_version: 1.0.4
