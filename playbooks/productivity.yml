@@ -13,11 +13,10 @@
         name: google-chrome-stable
         state: present
 
-    # re-enable after 36 release; currently broken
-    # - name: install nextcloud-client
-    #   ansible.builtin.dnf:
-    #     name: nextcloud-client
-    #     state: present
+    - name: install nextcloud-client
+      ansible.builtin.dnf:
+        name: nextcloud-client
+        state: present
 
     - name: install Discord
       community.general.flatpak:
