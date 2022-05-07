@@ -7,3 +7,8 @@
         remote: flathub
         name: com.bitwarden.desktop
         state: present
+
+    - name: install chrome
+      ansible.builtin.dnf:
+        name: google-chrome-stable
+        state: present
