@@ -16,23 +16,24 @@
         dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
         mode: 0644
         checksum: "sha256:{{ go_sha256 }}"
-      when: usrlocalgo is defined and usrlocalgo.stat.exists == false
+      when: usrlocalgo is defined and not usrlocalgo.stat.exists
 
     - name: "unpack go {{ go_version }}"
       ansible.builtin.unarchive:
         src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
         dest: /usr/local
-      when: usrlocalgo is defined and usrlocalgo.stat.exists == false
+      when: usrlocalgo is defined and not usrlocalgo.stat.exists
 
     - name: "delete downloaded go {{ go_version }} tarball"
       ansible.builtin.file:
         name: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
         state: absent
-      when: usrlocalgo is defined and usrlocalgo.stat.exists == false
+      when: usrlocalgo is defined and not usrlocalgo.stat.exists
 
     - name: add /usr/local/go in global path
       ansible.builtin.lineinfile:
         path: /etc/profile.d/golang.sh
         line: 'export PATH=$PATH:/usr/local/go/bin'
         create: yes
+        mode: 0644
 
