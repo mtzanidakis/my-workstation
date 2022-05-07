@@ -4,6 +4,7 @@
 - import_playbook: ./playbooks/golang.yml
 - import_playbook: ./playbooks/k8s.yml
 - import_playbook: ./playbooks/chat.yml
+- import_playbook: ./playbooks/games.yml
 - import_playbook: ./playbooks/multimedia.yml
 - import_playbook: ./playbooks/productivity.yml
 - import_playbook: ./playbooks/user.yml

@@ -1,0 +1,14 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install Steam
+      community.general.flatpak:
+        remote: flathub
+        name: com.valvesoftware.Steam
+        state: present
+
+    - name: install steam-devices
+      ansible.builtin.dnf:
+        name: steam-devices
+        state: present
