@@ -1,0 +1,101 @@
+# install google-sdk, kubectl, k9s, helm etc
+- hosts: all
+  become: true
+  vars:
+    kubectx_version: 0.9.4
+    kubectx_checksum: sha256:db5a48e85ff4d8c6fa947e3021e11ba4376f9588dd5fa779a80ed5c18287db22
+    kubectx_bin_checksum: 9317271d6dd7c771c844d9d3b37a7e56c5d74c6e53366aa230ced3fb69d128bc
+    kubectx_comp_checksum: sha256:410b5315f7a91b1c210cbc86c9cc4dda065f2ac180b490f3ebbf7e764ab6b470
+    kubens_checksum: sha256:8b3672961fb15f8b87d5793af8bd3c1cca52c016596fbf57c46ab4ef39265fcd
+    kubens_bin_checksum: cc376ced21b441efe4d61685830e0ff3ade194c303216d1ca08b72073c556d44
+    kubens_comp_checksum: sha256:084c226035af951e582020b2bc055a6521929ee54d8942b4d19577e5d45fd8f7
+
+  tasks:
+    - name: enable Google Cloud SDK repo
+      ansible.builtin.yum_repository:
+        name: google-cloud-cli
+        description: Google Cloud CLI
+        file: google-cloud-sdk
+        baseurl: https://packages.cloud.google.com/yum/repos/cloud-sdk-el8-x86_64
+        gpgkey:
+          - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+          - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+        gpgcheck: yes
+
+    - name: install google-cloud-cli & kubectl
+      ansible.builtin.dnf:
+        name:
+          - google-cloud-cli
+          - kubectl
+
+    - name: check if kubectx is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/kubectx
+        checksum_algorithm: sha256
+      register: localbinkubectx
+
+    - name: "download kubectx {{ kubectx_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/ahmetb/kubectx/releases/download/v{{ kubectx_version }}/kubectx_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        dest: "/tmp/kubectx_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        mode: 0644
+        checksum: "{{ kubectx_checksum }}"
+      when: localbinkubectx.stat.checksum is not defined or localbinkubectx.stat.checksum != kubectx_bin_checksum
+
+    - name: "unpack kubectx {{ kubectx_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/kubectx_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        dest: /usr/local/bin
+        include: kubectx
+        owner: root
+        group: root
+      when: localbinkubectx.stat.checksum is not defined or localbinkubectx.stat.checksum != kubectx_bin_checksum
+
+    - name: "delete downloaded kubectx {{ kubectx_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/kubectx_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        state: absent
+      when: localbinkubectx.stat.checksum is not defined or localbinkubectx.stat.checksum != kubectx_bin_checksum
+
+    - name: "download kubectx zsh completion"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh"
+        dest: "/usr/share/zsh/site-functions"
+        mode: 0644
+        checksum: "{{ kubectx_comp_checksum }}"
+
+    - name: check if kubens is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/kubens
+        checksum_algorithm: sha256
+      register: localbinkubens
+
+    - name: "download kubens {{ kubectx_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/ahmetb/kubectx/releases/download/v{{ kubectx_version }}/kubens_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        dest: "/tmp/kubens_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        mode: 0644
+        checksum: "{{ kubens_checksum }}"
+      when: localbinkubens.stat.checksum is not defined or localbinkubens.stat.checksum != kubens_bin_checksum
+
+    - name: "unpack kubens {{ kubectx_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/kubens_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        dest: /usr/local/bin
+        include: kubens
+        owner: root
+        group: root
+      when: localbinkubens.stat.checksum is not defined or localbinkubens.stat.checksum != kubens_bin_checksum
+
+    - name: "delete downloaded kubens {{ kubectx_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/kubens_v{{ kubectx_version }}_linux_x86_64.tar.gz"
+        state: absent
+      when: localbinkubens.stat.checksum is not defined or localbinkubens.stat.checksum != kubens_bin_checksum
+
+    - name: "download kubens zsh completion"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh"
+        dest: "/usr/share/zsh/site-functions"
+        mode: 0644
+        checksum: "{{ kubens_comp_checksum }}"
