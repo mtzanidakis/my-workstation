@@ -1,0 +1,20 @@
+- hosts: all
+  become: true
+
+  tasks:
+  - name: add MongoDB 5.0 repo
+    ansible.builtin.yum_repository:
+      name: mongodb-org-5.0
+      description: MongoDB Repository
+      file: mongodb-org-5.0
+      baseurl: https://repo.mongodb.org/yum/redhat/8/mongodb-org/5.0/$basearch/
+      gpgkey: https://www.mongodb.org/static/pgp/server-5.0.asc
+      gpgcheck: yes
+
+  - name: install MongoDB shell, tools & gui
+    ansible.builtin.dnf:
+      name:
+        - mongodb-compass
+        - mongodb-database-tools
+        - mongodb-mongosh
+      state: present

@@ -2,6 +2,7 @@
 - import_playbook: ./playbooks/docker.yml
 - import_playbook: ./playbooks/dev.yml
 - import_playbook: ./playbooks/go.yml
+- import_playbook: ./playbooks/db.yml
 - import_playbook: ./playbooks/k8s.yml
 - import_playbook: ./playbooks/chat.yml
 - import_playbook: ./playbooks/games.yml
