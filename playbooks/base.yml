@@ -36,6 +36,7 @@
           - htop
           - keychain
           - ncdu
+          - neofetch
           - nmap
           - pwgen
           - restic
