@@ -41,6 +41,7 @@
           - htop
           - keychain
           - ncdu
+          - nmap
           - pwgen
           - restic
           - ripgrep
