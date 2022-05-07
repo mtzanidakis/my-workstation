@@ -2,9 +2,19 @@
   become: true
 
   tasks:
+    - name: enable Visual Studio Code repo
+      ansible.builtin.yum_repository:
+        name: code
+        description: Visual Studio Code
+        file: vscode
+        baseurl: 'https://packages.microsoft.com/yumrepos/vscode'
+        gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
+        gpgcheck: yes
+
     - name: install develop packages
       ansible.builtin.dnf:
         name:
+          - code
           - neovim
           - sqlite
           - zeal
