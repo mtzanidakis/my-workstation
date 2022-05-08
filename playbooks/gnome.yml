@@ -115,27 +115,22 @@
         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
         value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
 
-    - name: no terminal bell
+    - name: terminal no bell
       dconf:
         key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/audible-bell"
         value: "false"
-
     - name: terminal scrollback lines
       dconf:
         key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/scrollback-lines"
         value: "1000000"
-
-    - name: zoom in with ctrl+= in terminal
+    - name: terminal zoom in with ctrl+= in terminal
       dconf:
         key: "/org/gnome/terminal/legacy/keybindings/zoom-in"
         value: "'<Control>equal'"
-
     - name: do not use theme colors
       dconf:
         key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/use-theme-colors"
         value: "false"
-
-    # solarized dark
     - name: terminal background color (solarized dark)
       dconf:
         key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-color"
@@ -153,17 +148,14 @@
       dconf:
         key: "/org/gnome/TextEditor/highlight-current-line"
         value: "true"
-
     - name: TextEditor show line numbers
       dconf:
         key: "/org/gnome/TextEditor/show-line-numbers"
         value: "true"
-
     - name: TextEditor show map
       dconf:
         key: "/org/gnome/TextEditor/show-map"
         value: "true"
-
     - name: TextEditor style solarized
       dconf:
         key: "/org/gnome/TextEditor/style-scheme"
