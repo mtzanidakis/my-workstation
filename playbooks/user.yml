@@ -40,3 +40,18 @@
         state: directory
         mode: 0755
       loop: ['autoload', 'tmp/backup', 'tmp/swap', 'tmp/undo']
+
+    - name: "create nvim directories for {{ username }}"
+      ansible.builtin.file:
+        path: "{{ homedir }}/{{ item }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        state: directory
+        mode: 0755
+      loop: ['.config/nvim', '.local/share/nvim/site/autoload']
+    
+    - name: symlink .vimrc to .config/nvim/init.vim
+      ansible.builtin.file:
+        path: "{{ homedir }}/.config/nvim/init.vim"
+        src: "{{ homedir }}/.vimrc"
+        state: link
