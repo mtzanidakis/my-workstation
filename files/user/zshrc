@@ -160,6 +160,9 @@ _autosuggest=/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 	eval $(keychain -q --eval --agents gpg,ssh --timeout 120 \
 		$(cd $HOME/.ssh; echo *{ed25519,rsa}))
 
+## direnv
+[[ $(whence direnv) ]] && eval "$(direnv hook zsh)"
+
 ## path
 [[ -d $HOME/bin ]] && PATH=$HOME/bin:$PATH
 if [[ -d $HOME/go ]]; then
