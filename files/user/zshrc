@@ -133,12 +133,13 @@ function kwide {
 }
 
 function ktail {
-	_app=$1; shift
+	local _app=$1; shift
 	kubectl logs --prefix -f -l app=${_app} $@
 }
 
 function weather {
-	[[ "$1" ]] && _city="$1" || _city=Cholargos
+	local _city=Cholargos
+	[[ "$1" ]] && _city="$1"
 	curl -s "https://wttr.in/${_city}?format=3"
 }
 
@@ -148,7 +149,6 @@ function rsb {
 		echo "available options: $(cd ${_rsb}; echo *)"
 		return 2
 	fi
-
 	cd "${_rsb}/$1"
 }
 
