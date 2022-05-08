@@ -1,0 +1,62 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install 32-bit glibc for compatibility
+      ansible.builtin.dnf:
+        name: glibc.i686
+        state: present
+
+    - name: install Brother HL-1223WE drivers
+      ansible.builtin.dnf:
+        name:
+          - https://download.brother.com/welcome/dlf102475/hl1210wlpr-3.0.1-1.i386.rpm
+          - https://download.brother.com/welcome/dlf102476/hl1210wcupswrapper-3.0.1-1.i386.rpm
+        state: present
+        disable_gpg_check: true
+
+    - name: check if Canon Pixma MX925 driver is available
+      ansible.builtin.stat:
+        path: /usr/share/cups/model/canonmx920.ppd
+      register: mx920ppd
+
+    - name: download Canon Pixma MX925 drivers tarball
+      ansible.builtin.get_url:
+        url: https://gdlp01.c-wss.com/gds/9/0100005169/01/cnijfilter-mx920series-3.90-1-rpm.tar.gz
+        dest: /tmp/cnijfilter-mx920series-3.90-1-rpm.tar.gz
+        mode: 0644
+        checksum: sha256:962189f7d3ccc285b128c982950dc8df30f0a291c1d04a3d5cdcaae1e04f8680
+      when: mx920ppd.stat.exists is false
+
+    - name: unpack Canon Pixma MX925 drivers tarball
+      ansible.builtin.unarchive:
+        src: /tmp/cnijfilter-mx920series-3.90-1-rpm.tar.gz
+        dest: /tmp
+        include:
+          - cnijfilter-mx920series-3.90-1-rpm/packages/cnijfilter-common-3.90-1.x86_64.rpm
+          - cnijfilter-mx920series-3.90-1-rpm/packages/cnijfilter-mx920series-3.90-1.x86_64.rpm
+      when: mx920ppd.stat.exists is false
+
+    - name: install pangox-compat from Fedora 32
+      ansible.builtin.dnf:
+        name: pangox-compat
+        state: present
+        releasever: "32"
+      when: mx920ppd.stat.exists is false
+
+    - name: install Canon Pixma MX925 drivers
+      ansible.builtin.dnf:
+        name:
+          - /tmp/cnijfilter-mx920series-3.90-1-rpm/packages/cnijfilter-common-3.90-1.x86_64.rpm
+          - /tmp/cnijfilter-mx920series-3.90-1-rpm/packages/cnijfilter-mx920series-3.90-1.x86_64.rpm
+        state: present
+        disable_gpg_check: true
+      when: mx920ppd.stat.exists is false
+
+    - name: delete Canon Pixma MX925 drivers tarball & extracted files
+      ansible.builtin.file:
+        name:
+          - /tmp/cnijfilter-mx920series-3.90-1-rpm.tar.gz
+          - /tmp/cnijfilter-mx920series-3.90-1-rpm
+        state: absent
+      when: mx920ppd.stat.exists is false

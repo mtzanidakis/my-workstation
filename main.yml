@@ -9,5 +9,6 @@
 - import_playbook: ./playbooks/games.yml
 - import_playbook: ./playbooks/multimedia.yml
 - import_playbook: ./playbooks/productivity.yml
+- import_playbook: ./playbooks/printers.yml
 - import_playbook: ./playbooks/user.yml
 - import_playbook: ./playbooks/gnome.yml
