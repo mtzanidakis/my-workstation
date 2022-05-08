@@ -1,4 +1,11 @@
 - hosts: all
+  vars:
+    filesdir: ../files/gnome
+    username: "{{ lookup('env', 'USERNAME') }}"
+    homedir: "/home/{{ username }}"
+    wallpapersdir: "{{ homedir }}/Pictures/Wallpapers"
+    wallpaper: sebastian-svenson-d2w-_1LJioQ-unsplash.jpg
+
   tasks:
     - name: remove background logo extension
       become: true
@@ -161,3 +168,21 @@
       dconf:
         key: "/org/gnome/TextEditor/style-scheme"
         value: "'solarized-dark'"
+
+    - name: add Wallpaper
+      ansible.builtin.copy:
+        src: "{{ filesdir }}/{{ wallpaper }}"
+        dest: "{{ wallpapersdir }}/{{ wallpaper }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
+
+    - name: set Wallpaper
+      dconf:
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file://{{ wallpapersdir }}/{{ wallpaper }}'"
+
+    - name: set Wallpaper for dark theme
+      dconf:
+        key: "/org/gnome/desktop/background/picture-uri-dark"
+        value: "'file://{{ wallpapersdir }}/{{ wallpaper }}'"
