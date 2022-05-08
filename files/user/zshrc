@@ -101,7 +101,6 @@ alias df='df -h'
 alias mkdir='nocorrect mkdir'
 alias dmesg='dmesg -HT'
 alias confcat="sed -e 's/[#;].*//;/^\s*$/d' "$@""
-alias weather='curl -s "https://wttr.in/Cholargos?format=3"'
 alias whatsmyip='dig -4 +short myip.opendns.com @resolver1.opendns.com'
 alias whatsmyip2='curl -s https://ipinfo.io'
 alias exa="exa -F"
@@ -136,6 +135,11 @@ function kwide {
 function ktail {
 	_app=$1; shift
 	kubectl logs --prefix -f -l app=${_app} $@
+}
+
+function weather {
+	[[ "$1" ]] && _city="$1" || _city=Cholargos
+	curl -s "https://wttr.in/${_city}?format=3"
 }
 
 # fortune cookie
