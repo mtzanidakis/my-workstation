@@ -1,0 +1,24 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: enable Tailscale repo
+      ansible.builtin.yum_repository:
+        name: tailscale-stable
+        description: Tailscale stable
+        file: tailscale
+        baseurl: 'https://pkgs.tailscale.com/stable/fedora/$basearch'
+        gpgkey: 'https://pkgs.tailscale.com/stable/fedora/repo.gpg'
+        gpgcheck: no
+        repo_gpgcheck: yes
+
+    - name: install Tailscale
+      ansible.builtin.dnf:
+        name: tailscale
+        state: present
+
+    - name: enable Tailscale daemon
+      ansible.builtin.systemd:
+        name: tailscaled
+        state: started
+        enabled: yes
