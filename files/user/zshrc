@@ -142,6 +142,16 @@ function weather {
 	curl -s "https://wttr.in/${_city}?format=3"
 }
 
+function rsb {
+	local _rsb=$HOME/.rsbackup
+	if [[ -z "$1" ]]; then
+		echo "available options: $(cd ${_rsb}; echo *)"
+		return 2
+	fi
+
+	cd "${_rsb}/$1"
+}
+
 # fortune cookie
 [[ $(whence fortune) ]] && echo -e "\n$(fortune -a)\n"
 
