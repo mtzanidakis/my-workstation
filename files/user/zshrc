@@ -124,8 +124,8 @@ alias lwdc="docker-compose -f docker-compose.yml \
 	-f extra/iplocate.yml \
 	-f extra/mobapplinker.yml \
 	-f extra/pdfservice.yml"
-alias lwdctail="lwdc logs --no-log-prefix --no-color -f "
-alias doco='docker-compose'
+alias lwdctail='lwdc logs --no-log-prefix --no-color -f'
+alias doco=docker-compose
 
 ## functions
 function kwide {
@@ -143,7 +143,7 @@ function weather {
 }
 
 # fortune cookie
-which fortune >/dev/null 2>&1 && echo -e "\n$(fortune -a)\n"
+[[ $(whence fortune) ]] && echo -e "\n$(fortune -a)\n"
 
 ## fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
@@ -156,14 +156,13 @@ _autosuggest=/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -f ${_autosuggest} ]] && source ${_autosuggest}
 
 ## keychain (start on first connection (and timeout after 120 mins)
-[[ -z "${SSH_CLIENT}" && $(which keychain) ]] &&
+[[ -z "${SSH_CLIENT}" && $(whence keychain) ]] &&
 	eval $(keychain -q --eval --agents gpg,ssh --timeout 120 \
-		id_{ed25519,rsa} github_ed25519)
+		$(cd $HOME/.ssh; echo *{ed25519,rsa}))
 
-## go
+## path
+[[ -d $HOME/bin ]] && PATH=$HOME/bin:$PATH
 if [[ -d $HOME/go ]]; then
 	export GOPATH=$HOME/go
 	PATH=$GOPATH/bin:$PATH
 fi
-
-[[ -d $HOME/bin ]] && PATH=$HOME/bin:$PATH
