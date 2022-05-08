@@ -92,54 +92,6 @@ PROMPT='$(left_prompt)'
 ## editor (vim or vi)
 export EDITOR=vim
 
-## OS-specific configuration
-case "`uname -s`" in
-	Linux)
-		# ls colors (solarized)
-		[[ $TERM = "xterm-256color" ]] &&
-			export LS_COLORS="di=00;34:ln=00;35:so=00;32:pi=01;33:ex=00;31:bd=00;34"
-
-		export LS_OPTIONS='--color=auto -F'
-		alias ls="ls $LS_OPTIONS"
-
-		# show matched exp's in green on grep
-		export GREP_COLOR=32
-		alias grep='grep --color=auto'
-
-		# enable colored syntax-highlighting
-		export LESS=-R
-	;;
-	OpenBSD)
-		export LC_CTYPE="en_US.UTF-8"
-		export CVSROOT="anoncvs@anoncvs.fr.openbsd.org:/cvs"
-
-		# lesspipe
-		if [ -x /usr/local/bin/lesspipe ]; then
-			export LESSOPEN="| lesspipe %s"
-		fi
-
-		alias ls='ls -Fh'
-		alias port_upg='cd /usr/ports; cvs -d $CVSROOT -q up -Pd'
-		alias src_upg='cd /usr/src; cvs -d $CVSROOT -q up -Pd'
-		alias check_ports='( cd /usr/ports/infrastructure/build; \
-			./out-of-date )'
-        ;;
-	Darwin)
-		# ls colors (solarized)
-		if [ $TERM = "xterm-256color" ]; then
-			export LSCOLORS="gxfxbEaEBxxEhEhBaDaCaD"
-		fi
-
-		alias ls='ls -FG'
-
-		# lesspipe
-		if [ -x /usr/local/bin/lesspipe.sh ]; then
-			export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" \
-				LESS_ADVANCED_PREPROCESSOR=1
-		fi
-        ;;
-esac
-
 ## aliases
 alias cp='nocorrect cp -i'
 alias rm='nocorrect rm -i'
