@@ -18,6 +18,11 @@
         name: nextcloud-client
         state: present
 
+    - name: install Calibre
+      ansible.builtin.dnf:
+        name: calibre
+        state: present
+
     - name: install Discord
       community.general.flatpak:
         remote: flathub
