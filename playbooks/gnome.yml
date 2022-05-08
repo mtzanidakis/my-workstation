@@ -1,6 +1,6 @@
 - hosts: all
   tasks:
-    - name: remove background log extension
+    - name: remove background logo extension
       become: true
       dnf:
         name: gnome-shell-extension-background-logo
