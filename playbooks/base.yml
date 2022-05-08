@@ -29,6 +29,7 @@
     - name: install base packages
       ansible.builtin.dnf:
         name:
+          - autofs
           - bat
           - cu
           - fortune-mod
