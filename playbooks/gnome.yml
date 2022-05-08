@@ -179,10 +179,8 @@
 
     - name: set Wallpaper
       dconf:
-        key: "/org/gnome/desktop/background/picture-uri"
+        key: "/org/gnome/desktop/background/{{ item }}"
         value: "'file://{{ wallpapersdir }}/{{ wallpaper }}'"
-
-    - name: set Wallpaper for dark theme
-      dconf:
-        key: "/org/gnome/desktop/background/picture-uri-dark"
-        value: "'file://{{ wallpapersdir }}/{{ wallpaper }}'"
+      loop:
+        - picture-uri
+        - picture-uri-dark
