@@ -2,6 +2,11 @@
   become: true
 
   tasks:
+    - name: install Chrome
+      ansible.builtin.dnf:
+        name: google-chrome-stable
+        state: present
+
     - name: enable Tailscale repo
       ansible.builtin.yum_repository:
         name: tailscale-stable
