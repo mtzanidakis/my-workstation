@@ -176,9 +176,6 @@ alias lwdc="docker-compose -f docker-compose.yml \
 alias lwdctail="lwdc logs --no-log-prefix --no-color -f "
 alias doco='docker-compose'
 
-# XXX: temporary until tableplus is fixed on arch
-alias tableplus="LD_PRELOAD=/opt/tableplus/lib/libldap-2.5.so.0.1.1:/opt/tableplus/lib/liblber-2.5.so.0.1.1:/opt/tableplus/lib/libsasl2.so.2.0.25:/opt/tableplus/lib/libgio-2.0.so.0.6800.4 /usr/local/bin/tableplus"
-
 ## functions
 function kwide {
 	kubectl $@ -o wide
