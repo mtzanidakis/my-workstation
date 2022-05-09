@@ -96,3 +96,12 @@
         name: https://github.com/go-task/task/releases/download/v3.12.0/task_linux_amd64.rpm
         state: present
         disable_gpg_check: true
+
+    - name: install dasel
+      ansible.builtin.get_url:
+        url: https://github.com/TomWright/dasel/releases/download/v1.24.3/dasel_linux_amd64
+        dest: /usr/local/bin/dasel
+        owner: root
+        group: root
+        mode: 0755
+        checksum: sha256:5c48f1bae2e1b7cd3dbada7d27b2acca021707b738a378833eb07b2d20c2f95d
