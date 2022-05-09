@@ -34,6 +34,7 @@
           - upx
           - vim-enhanced
           - zeal
+        state: present
 
     - name: install Insomnia
       community.general.flatpak:
