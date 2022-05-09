@@ -36,4 +36,3 @@
         line: 'export PATH=$PATH:/usr/local/go/bin'
         create: yes
         mode: 0644
-
