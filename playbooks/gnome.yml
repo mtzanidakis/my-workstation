@@ -182,3 +182,13 @@
       loop:
         - picture-uri
         - picture-uri-dark
+
+    - name: show delete permanently in context menu
+      dconf:
+        key: "/org/gnome/nautilus/preferences/show-delete-permanently"
+        value: "true"
+
+    - name: sort directories first in file chooser
+      dconf:
+        key: "/org/gtk/settings/file-chooser/sort-directories-first"
+        value: "true"
