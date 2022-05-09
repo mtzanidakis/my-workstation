@@ -109,7 +109,6 @@
       dconf:
         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
         value: "'<Shift><Super>f'"
-
     - name: enable custom keybindings
       dconf:
         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
@@ -176,7 +175,6 @@
         owner: "{{ username }}"
         group: "{{ username }}"
         mode: 0644
-
     - name: set Wallpaper
       dconf:
         key: "/org/gnome/desktop/background/{{ item }}"
