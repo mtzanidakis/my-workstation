@@ -41,8 +41,15 @@
           - obs-studio
           - pavucontrol
           - vlc
+        state: present
 
     - name: install spotify
       community.general.flatpak:
         name: com.spotify.Client
         state: present
+
+    - name: install v4l2loopback
+      ansible.builtin.dnf:
+        name: kmod-v4l2loopback
+        state: present
+
