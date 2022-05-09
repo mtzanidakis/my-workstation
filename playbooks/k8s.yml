@@ -33,6 +33,7 @@
           - google-cloud-cli
           - helm
           - kubectl
+        state: present
 
     - name: check if kubectx is installed
       ansible.builtin.stat:

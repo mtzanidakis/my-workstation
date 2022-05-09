@@ -27,6 +27,7 @@
         exclude:
           - gstreamer1-plugins-bad-free-devel
           - lame-devel
+        state: present
 
     - name: install media apps
       ansible.builtin.dnf:

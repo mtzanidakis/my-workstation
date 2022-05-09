@@ -27,6 +27,7 @@
           - docker-ce-cli
           - containerd.io
           - docker-compose-plugin
+        state: present
 
     - name: enable BuildKit
       ansible.builtin.lineinfile:
