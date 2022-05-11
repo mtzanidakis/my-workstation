@@ -1,8 +1,8 @@
 - hosts: all
   become: true
   vars:
-    go_version: 1.18.1
-    go_sha256: b3b815f47ababac13810fc6021eb73d65478e0b2db4b09d348eefad9581a2334
+    go_version: 1.18.2
+    go_sha256: sha256:e54bec97a1a5d230fc2f9ad0880fcbabb5888f30ed9666eca4a91c5a32e86cbc
 
   tasks:
     - name: check if go is already installed
@@ -15,7 +15,7 @@
         url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
         dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
         mode: 0644
-        checksum: "sha256:{{ go_sha256 }}"
+        checksum: "{{ go_sha256 }}"
       when: usrlocalgo is defined and not usrlocalgo.stat.exists
 
     - name: "unpack go {{ go_version }}"
