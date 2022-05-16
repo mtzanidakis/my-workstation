@@ -2,6 +2,11 @@
   become: true
 
   tasks:
+    - name: install Speedtest CLI
+      ansible.builtin.dnf:
+        name: python3-speedtest-cli
+        state: present
+
     - name: install Chrome
       ansible.builtin.dnf:
         name: google-chrome-stable
