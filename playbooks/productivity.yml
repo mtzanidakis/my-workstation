@@ -18,11 +18,6 @@
         name: calibre
         state: present
 
-    - name: install csvkit
-      ansible.builtin.dnf:
-        name: python3-csvkit
-        state: present
-
     - name: install Discord
       community.general.flatpak:
         remote: flathub
