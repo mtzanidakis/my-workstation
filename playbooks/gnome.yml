@@ -22,6 +22,7 @@
           - gnome-tweaks
           - jetbrains-mono-fonts
           - python3-psutil
+          - sushi
         state: present
 
     - name: set xkb-options
