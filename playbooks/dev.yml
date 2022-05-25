@@ -27,6 +27,7 @@
           - code
           - direnv
           - filezilla
+          - graphviz
           - neovim
           - nfpm
           - python3-ansible-lint
