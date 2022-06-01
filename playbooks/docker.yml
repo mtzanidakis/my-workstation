@@ -62,6 +62,12 @@
         checksum: "{{ switch_checksum }}"
         mode: 0755
 
+    - name: install docker-compose 1.28.x zsh completion
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/docker/compose/1.28.x/contrib/completion/zsh/_docker-compose
+        dest: /usr/share/zsh/vendor-completions/_docker-compose
+        checksum: sha256:f93536502e26c399c5437331e077d3b5a8cb6d7cb39e0446bbd810cedc2ce52d
+
     - name: check if dive is already installed
       ansible.builtin.stat:
         path: /usr/local/bin/dive
