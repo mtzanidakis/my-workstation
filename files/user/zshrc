@@ -11,6 +11,9 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' menu select
 zstyle ':completion:*:sudo:*' command-path /bin /usr/bin /sbin /usr/sbin /usr/local/bin /usr/local/sbin
 
+# vendor completions
+fpath=($fpath /usr/share/zsh/vendor-completions)
+
 ## load modules
 autoload -U compinit && compinit
 autoload -U edit-command-line
