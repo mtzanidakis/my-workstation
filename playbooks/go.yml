@@ -1,8 +1,8 @@
 - hosts: all
   become: true
   vars:
-    go_version: 1.18.2
-    go_sha256: sha256:e54bec97a1a5d230fc2f9ad0880fcbabb5888f30ed9666eca4a91c5a32e86cbc
+    go_version: 1.18.3
+    go_sha256: sha256:956f8507b302ab0bb747613695cdae10af99bbd39a90cae522b7c0302cc27245
 
   tasks:
     - name: check if go is already installed
