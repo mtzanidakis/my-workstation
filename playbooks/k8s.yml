@@ -31,6 +31,7 @@
       ansible.builtin.dnf:
         name:
           - google-cloud-cli
+          - google-cloud-cli-gke-gcloud-auth-plugin
           - helm
           - kubectl
         state: present
