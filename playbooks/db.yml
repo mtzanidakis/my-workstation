@@ -1,5 +1,8 @@
 - hosts: all
   become: true
+  vars:
+    url: "https://downloads.mongodb.com/compass/mongodb-compass-1.32.2.x86_64.rpm"
+    file: "mongodb-compass.rpm"
 
   tasks:
   - name: add MongoDB 5.0 repo
@@ -11,10 +14,16 @@
       gpgkey: https://www.mongodb.org/static/pgp/server-5.0.asc
       gpgcheck: yes
 
+  - name: create directory downloaded-files
+    file: state=directory path="./downloaded-files"
+
+  - name: download package {{ url }}
+    get_url: url={{ url }} dest="downloaded-files/{{ file }}"
+
   - name: install MongoDB shell, tools & gui
     ansible.builtin.dnf:
       name:
-        - mongodb-compass
+        - "{{ playbook_dir }}/downloaded-files/mongodb-compass.rpm"
         - mongodb-database-tools
         - mongodb-mongosh
       state: present
