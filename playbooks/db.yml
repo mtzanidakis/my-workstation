@@ -1,5 +1,7 @@
 - hosts: all
   become: true
+  vars:
+    compass_version: 1.32.2
 
   tasks:
   - name: add MongoDB 5.0 repo
@@ -14,10 +16,15 @@
   - name: install MongoDB shell, tools & gui
     ansible.builtin.dnf:
       name:
-        - mongodb-compass
         - mongodb-database-tools
         - mongodb-mongosh
       state: present
+
+  - name: install MongoDB Compass
+    ansible.builtin.dnf:
+      name: "https://downloads.mongodb.com/compass/mongodb-compass-{{ compass_version }}.x86_64.rpm"
+      state: present
+      disable_gpg_check: true
 
   - name: install pgcli
     ansible.builtin.dnf:
