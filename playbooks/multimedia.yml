@@ -53,3 +53,7 @@
         name: kmod-v4l2loopback
         state: present
 
+    - name: install plex desktop
+      community.general.flatpak:
+        name: tv.plex.PlexDesktop
+        state: present
