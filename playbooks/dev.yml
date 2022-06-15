@@ -4,6 +4,19 @@
     ngrok_bin_checksum: b7c69d54fc537f3a8225647ad8fdf6455b021e09f9bb31d1c943bdd0c8672844
 
   tasks:
+    - name: install virtualization group
+      ansible.builtin.dnf:
+        name:
+          - "@virtualization"
+          - virt-top
+        state: present
+
+    - name: enable libvirtd service
+      ansible.builtin.systemd:
+        name: libvirtd
+        state: started
+        enabled: yes
+
     - name: enable Visual Studio Code repo
       ansible.builtin.yum_repository:
         name: code
