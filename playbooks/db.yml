@@ -35,3 +35,8 @@
     ansible.builtin.dnf:
       name: mycli
       state: present
+
+  - name: install RESP.app
+    community.general.flatpak:
+      name: app.resp.RESP
+      state: present
