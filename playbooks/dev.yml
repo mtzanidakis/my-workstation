@@ -44,6 +44,7 @@
           - neovim
           - nfpm
           - python3-ansible-lint
+          - python3-pip
           - sqlite
           - upx
           - vim-enhanced
