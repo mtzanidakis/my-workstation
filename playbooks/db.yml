@@ -13,7 +13,7 @@
       gpgkey: https://www.mongodb.org/static/pgp/server-5.0.asc
       gpgcheck: yes
 
-  - name: install MongoDB shell, tools & gui
+  - name: install MongoDB shell and tools
     ansible.builtin.dnf:
       name:
         - mongodb-database-tools
