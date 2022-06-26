@@ -116,9 +116,9 @@
 
     - name: install dasel
       ansible.builtin.get_url:
-        url: https://github.com/TomWright/dasel/releases/download/v1.24.3/dasel_linux_amd64
+        url: https://github.com/TomWright/dasel/releases/download/v1.25.0/dasel_linux_amd64
         dest: /usr/local/bin/dasel
         owner: root
         group: root
         mode: 0755
-        checksum: sha256:5c48f1bae2e1b7cd3dbada7d27b2acca021707b738a378833eb07b2d20c2f95d
+        checksum: sha256:b52604b4c925250998f8e9a8feb8c21ad8c3a7ab984aa7967e61b000c352b6cb
