@@ -57,3 +57,8 @@
       community.general.flatpak:
         name: tv.plex.PlexDesktop
         state: present
+
+    - name: install shotcut
+      community.general.flatpak:
+        name: org.shotcut.Shotcut
+        state: present
