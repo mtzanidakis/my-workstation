@@ -66,7 +66,7 @@
 
     - name: install GitHub CLI
       ansible.builtin.dnf:
-        name: https://github.com/cli/cli/releases/download/v2.9.0/gh_2.9.0_linux_amd64.rpm
+        name: https://github.com/cli/cli/releases/download/v2.13.0/gh_2.13.0_linux_amd64.rpm
         state: present
         disable_gpg_check: true
 
