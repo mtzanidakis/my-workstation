@@ -38,6 +38,7 @@
       ansible.builtin.dnf:
         name:
           - code
+          - composer
           - direnv
           - filezilla
           - graphviz
