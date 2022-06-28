@@ -43,6 +43,7 @@
           - filezilla
           - graphviz
           - neovim
+          - nodejs
           - nfpm
           - php-cli
           - python3-ansible-lint
