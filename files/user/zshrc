@@ -129,6 +129,7 @@ alias lwdc="docker-compose -f docker-compose.yml \
 	-f extra/pdfservice.yml"
 alias lwdctail='lwdc logs --no-log-prefix --no-color -f'
 alias doco=docker-compose
+alias vim=nvim
 
 ## functions
 function kwide {
