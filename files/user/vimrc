@@ -15,6 +15,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'junegunn/fzf.vim'
+Plug 'github/copilot.vim'
 call plug#end()
 
 set nocompatible
