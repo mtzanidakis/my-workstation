@@ -62,3 +62,13 @@
       community.general.flatpak:
         name: org.shotcut.Shotcut
         state: present
+
+    - name: enable principis/NoiseTorch copr repo
+      community.general.copr:
+        name: principis/NoiseTorch
+        state: enabled
+
+    - name: install NoiseTorch
+      ansible.builtin.dnf:
+        name: noisetorch
+        state: present
