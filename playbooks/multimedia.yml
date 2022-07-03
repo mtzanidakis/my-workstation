@@ -33,6 +33,7 @@
       ansible.builtin.dnf:
         name:
           - audacity
+          - darktable
           - gimp
           - HandBrake-gui
           - helvum
