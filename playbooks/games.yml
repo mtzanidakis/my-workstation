@@ -12,3 +12,9 @@
       ansible.builtin.dnf:
         name: steam-devices
         state: present
+
+    - name: install Space Cadet Pinball
+      community.general.flatpak:
+        remote: flathub
+        name: com.github.k4zmu2a.spacecadetpinball
+        state: present
