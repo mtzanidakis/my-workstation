@@ -93,7 +93,7 @@ function left_prompt() {
 PROMPT='$(left_prompt)'
 
 ## editor (vim or vi)
-export EDITOR=vim
+export EDITOR=nvim
 
 ## aliases
 alias cp='nocorrect cp -i'
