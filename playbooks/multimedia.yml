@@ -39,9 +39,13 @@
           - helvum
           - kdenlive
           - mpv
-          - obs-studio
           - pavucontrol
           - vlc
+        state: present
+
+    - name: install OBS Studio
+      community.general.flatpak:
+        name: com.obsproject.Studio
         state: present
 
     - name: install spotify
