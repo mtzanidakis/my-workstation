@@ -36,6 +36,7 @@
           - fzf
           - htop
           - keychain
+          - lm_sensors
           - ncdu
           - neofetch
           - nmap
