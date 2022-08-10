@@ -53,11 +53,6 @@
         name: com.spotify.Client
         state: present
 
-    - name: install v4l2loopback
-      ansible.builtin.dnf:
-        name: kmod-v4l2loopback
-        state: present
-
     - name: install plex desktop
       community.general.flatpak:
         name: tv.plex.PlexDesktop
