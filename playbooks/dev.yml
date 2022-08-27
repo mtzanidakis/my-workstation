@@ -68,7 +68,7 @@
 
     - name: install GitHub CLI
       ansible.builtin.dnf:
-        name: https://github.com/cli/cli/releases/download/v2.13.0/gh_2.13.0_linux_amd64.rpm
+        name: https://github.com/cli/cli/releases/download/v2.14.6/gh_2.14.6_linux_amd64.rpm
         state: present
         disable_gpg_check: true
 
@@ -112,13 +112,13 @@
 
     - name: install go-task
       ansible.builtin.dnf:
-        name: https://github.com/go-task/task/releases/download/v3.12.0/task_linux_amd64.rpm
+        name: https://github.com/go-task/task/releases/download/v3.14.1/task_linux_amd64.rpm
         state: present
         disable_gpg_check: true
 
     - name: install dasel
       ansible.builtin.get_url:
-        url: https://github.com/TomWright/dasel/releases/download/v1.25.0/dasel_linux_amd64
+        url: https://github.com/TomWright/dasel/releases/download/v1.26.0/dasel_linux_amd64
         dest: /usr/local/bin/dasel
         owner: root
         group: root
