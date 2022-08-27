@@ -18,3 +18,9 @@
         remote: flathub
         name: com.github.k4zmu2a.spacecadetpinball
         state: present
+
+    - name: install Lutris
+      community.general.flatpak:
+        remote: flathub
+        name: net.lutris.Lutris
+        state: present
