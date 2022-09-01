@@ -46,6 +46,7 @@
           - solaar
           - sshfs
           - transmission
+          - wl-clipboard
           - zsh
           - zsh-autosuggestions
         state: present
