@@ -120,13 +120,7 @@ alias lwdc="docker-compose -f docker-compose.yml \
 	-f docker-compose.override.yml \
 	-f extra/website.yml \
 	-f extra/account.yml \
-	-f extra/adminer.yml \
-	-f extra/mailhog.yml \
-	-f extra/scorm.yml \
-	-f extra/lwdemomaker.yml \
-	-f extra/iplocate.yml \
-	-f extra/mobapplinker.yml \
-	-f extra/pdfservice.yml"
+	-f extra/adminer.yml"
 alias lwdctail='lwdc logs --no-log-prefix --no-color -f'
 alias doco=docker-compose
 alias vim=nvim
