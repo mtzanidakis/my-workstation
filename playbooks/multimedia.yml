@@ -72,3 +72,8 @@
       ansible.builtin.dnf:
         name: noisetorch
         state: present
+
+    - name: install curtail
+      community.general.flatpak:
+        name: com.github.huluti.Curtail
+        state: present
