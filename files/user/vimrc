@@ -133,8 +133,9 @@ set statusline+=[%l\/%L,%v]
 " syntastic
 nmap <silent><leader>e :Errors<CR>
 
-" vim-go: format with goimports on save
-let g:go_fmt_command = "goimports"
+" vim-go: format with gofumpt on save
+let g:go_fmt_command="gopls"
+let g:go_gopls_gofumpt=1
 
 au BufRead /tmp/mutt-* set tw=72
 
