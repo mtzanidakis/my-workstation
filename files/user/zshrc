@@ -180,3 +180,6 @@ fi
 
 ## gke auth
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+## goprivate repos
+export GOPRIVATE=gitlab.com/learnworlds
