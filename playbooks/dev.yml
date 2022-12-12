@@ -43,6 +43,7 @@
           - neovim
           - nodejs
           - nfpm
+          - nss-tools
           - php-cli
           - python3-ansible-lint
           - python3-pip
