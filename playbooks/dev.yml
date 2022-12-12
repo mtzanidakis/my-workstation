@@ -90,11 +90,7 @@
         state: present
         disable_gpg_check: true
 
-    - name: install dasel
-      ansible.builtin.get_url:
-        url: https://github.com/TomWright/dasel/releases/download/v1.26.0/dasel_linux_amd64
-        dest: /usr/local/bin/dasel
-        owner: root
-        group: root
-        mode: 0755
-        checksum: sha256:b52604b4c925250998f8e9a8feb8c21ad8c3a7ab984aa7967e61b000c352b6cb
+    - name: remove dasel
+      ansible.builtin.file:
+        path: /usr/local/bin/dasel
+        state: absent
