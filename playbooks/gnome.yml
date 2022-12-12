@@ -169,6 +169,14 @@
         key: "/org/gnome/TextEditor/style-scheme"
         value: "'solarized-dark'"
 
+    - name: "create {{ wallpapersdir }}"
+      ansible.builtin.file:
+        path: "{{ wallpapersdir }}"
+        state: directory
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0755
+
     - name: add Wallpaper
       ansible.builtin.copy:
         src: "{{ filesdir }}/{{ wallpaper }}"
