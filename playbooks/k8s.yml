@@ -11,9 +11,9 @@
     kubens_checksum: sha256:8b3672961fb15f8b87d5793af8bd3c1cca52c016596fbf57c46ab4ef39265fcd
     kubens_bin_checksum: cc376ced21b441efe4d61685830e0ff3ade194c303216d1ca08b72073c556d44
     kubens_comp_checksum: sha256:084c226035af951e582020b2bc055a6521929ee54d8942b4d19577e5d45fd8f7
-    k9s_version: 0.26.6
-    k9s_checksum: sha256:7abe5d029a29d8108ab405889ea2a8f731765d79333920ac7c2942c6e16d1bd4
-    k9s_bin_checksum: 8c77b964cd83cdff37f768cf0f154f13fa0843147220e71d56c61cf540cbe894
+    k9s_version: 0.26.7
+    k9s_checksum: sha256:f774bb75045e361e17a4f267491c5ec66f41db7bffd996859ffb1465420af249
+    k9s_bin_checksum: 9a4dbb8e339423b3c7cd587f4abdd20351c01af15c8f1546b99f4557199e2c74
 
   tasks:
     - name: enable Google Cloud SDK repo
