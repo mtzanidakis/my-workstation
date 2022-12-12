@@ -1,7 +1,5 @@
 - hosts: all
   become: true
-  vars:
-    ngrok_bin_checksum: b7c69d54fc537f3a8225647ad8fdf6455b021e09f9bb31d1c943bdd0c8672844
 
   tasks:
     - name: install virtualization group
@@ -72,34 +70,10 @@
         state: present
         disable_gpg_check: true
 
-    - name: check if ngrok is installed
-      ansible.builtin.stat:
-        path: /usr/local/bin/ngrok
-        checksum_algorithm: sha256
-      register: localbinngrok
-
-    - name: download ngrok
-      ansible.builtin.get_url:
-        url: https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
-        dest: /tmp/ngrok-v3-stable-linux-amd64.tgz
-        mode: 0644
-        checksum: sha256:b45efee336a937519e5d58e86031a97db6dc0687cf5a8541ee4dd4973b5cc42f
-      when: localbinngrok.stat.checksum is not defined or localbinngrok.stat.checksum != ngrok_bin_checksum
-
-    - name: unpack ngrok
-      ansible.builtin.unarchive:
-        src: /tmp/ngrok-v3-stable-linux-amd64.tgz
-        dest: /usr/local/bin
-        include: ngrok
-        owner: root
-        group: root
-      when: localbinngrok.stat.checksum is not defined or localbinngrok.stat.checksum != ngrok_bin_checksum
-
-    - name: delete downloaded ngrok tarball
+    - name: remove ngrok
       ansible.builtin.file:
-        name: /tmp/ngrok-v3-stable-linux-amd64.tgz
+        path: /usr/local/bin/ngrok
         state: absent
-      when: localbinngrok.stat.checksum is not defined or localbinngrok.stat.checksum != ngrok_bin_checksum
 
     - name: install mkcert
       ansible.builtin.get_url:
