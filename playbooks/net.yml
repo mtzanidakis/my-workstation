@@ -15,6 +15,7 @@
     - name: install network apps and tools
       ansible.builtin.dnf:
         name:
+          - google-chrome-stable
           - python3-speedtest-cli
           - rclone
           - tailscale
