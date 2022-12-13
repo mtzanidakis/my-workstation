@@ -1,5 +1,8 @@
 - hosts: all
   become: true
+  vars:
+    mkcert_version: 1.4.4
+    mkcert_chksum: sha256:6d31c65b03972c6dc4a14ab429f2928300518b26503f58723e532d1b0a3bbb52
 
   tasks:
     - name: install virtualization group
@@ -12,7 +15,6 @@
     - name: enable libvirtd service
       ansible.builtin.systemd:
         name: libvirtd
-        state: started
         enabled: yes
 
     - name: enable Visual Studio Code repo
@@ -39,6 +41,8 @@
           - composer
           - direnv
           - filezilla
+          - gh
+          - go-task
           - graphviz
           - neovim
           - nodejs
@@ -53,6 +57,14 @@
           - zeal
         state: present
 
+    - name: symlink go-task to task
+      ansible.builtin.file:
+        src: /usr/bin/go-task
+        dest: /usr/bin/task
+        owner: root
+        group: root
+        state: link
+
     - name: install Insomnia
       community.general.flatpak:
         remote: flathub
@@ -65,31 +77,24 @@
         name: com.getpostman.Postman
         state: present
 
-    - name: install GitHub CLI
-      ansible.builtin.dnf:
-        name: https://github.com/cli/cli/releases/download/v2.14.6/gh_2.14.6_linux_amd64.rpm
-        state: present
-        disable_gpg_check: true
-
     - name: remove ngrok
       ansible.builtin.file:
         path: /usr/local/bin/ngrok
         state: absent
 
-    - name: install mkcert
+    - name: "install mkcert {{ mkcert_version }}"
       ansible.builtin.get_url:
-        url: https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64
+        url: "https://github.com/FiloSottile/mkcert/releases/download/v{{ mkcert_version }}/mkcert-v{{ mkcert_version }}-linux-amd64"
         dest: /usr/local/bin/mkcert
         mode: 0755
         owner: root
         group: root
-        checksum: sha256:6d31c65b03972c6dc4a14ab429f2928300518b26503f58723e532d1b0a3bbb52
+        checksum: "{{ mkcert_chksum }}"
 
-    - name: install go-task
+    - name: remove task package
       ansible.builtin.dnf:
-        name: https://github.com/go-task/task/releases/download/v3.14.1/task_linux_amd64.rpm
-        state: present
-        disable_gpg_check: true
+        name: task
+        state: absent
 
     - name: remove dasel
       ansible.builtin.file:
