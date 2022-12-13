@@ -78,6 +78,11 @@
         name: com.github.huluti.Curtail
         state: present
 
+    - name: install Mousai
+      community.general.flatpak:
+        name: io.github.seadve.Mousai
+        state: present
+
     - name: add Charm repo for VHS
       ansible.builtin.yum_repository:
         name: charm
