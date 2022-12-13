@@ -90,7 +90,7 @@
       ansible.builtin.unarchive:
         src: "/tmp/kubens_v{{ kubectx_version }}_linux_x86_64.tar.gz"
         dest: /usr/local/bin
-        mode: 0644
+        mode: 0755
         include: kubens
         owner: root
         group: root
