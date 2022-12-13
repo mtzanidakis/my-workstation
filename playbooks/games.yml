@@ -24,3 +24,9 @@
         remote: flathub
         name: net.lutris.Lutris
         state: present
+
+    - name: install ProtonUp-Qt
+      community.general.flatpak:
+        remote: flathub
+        name: net.davidotek.pupgui2
+        state: present
