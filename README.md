@@ -15,6 +15,27 @@ Playbooks are grouped by categories in `playbooks` dir. The playbook `main.yml` 
 ansible-playbook -K playbooks/go.yml playbooks/user.yml
 ```
 
+## Notes for multimedia libraries
+
+Run
+
+```
+sudo dnf group upgrade --with-optional Multimedia
+```
+
+to install additional multimedia libraries from rpmfusion, like aptX codecs etc.
+
+## Notes for Fedora 37
+
+Run
+
+```
+sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld
+sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
+```
+
+to re-enable hardware accelerated video decoding.
+
 ## Compatibility
 
-Tested on Fedora Workstation 36.
+Tested on Fedora Workstation 36, 37.
