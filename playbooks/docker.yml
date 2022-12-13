@@ -4,8 +4,8 @@
     username: "{{ lookup('env', 'USERNAME') }}"
     ctop_version: 0.7.7
     ctop_checksum: sha256:b78374734ebe3d14b6edee3d5512c911c250d7fa7f3f964cb00acd3bc5a02a09
-    switch_version: 1.0.4
-    switch_checksum: sha256:08229ed196de5ce08228d194e2e2379cb6cb7959fe8dfe70859352d2fd9d21a5
+    switch_version: 1.0.5
+    switch_checksum: sha256:b40e078fb216ddac87fcf40cbb09b60286e6a21a51d5ad7f777c6d4dbea4eab4
     dive_version: 0.10.0
     dive_checksum: sha256:9541997876d4985de66d0fa5924dac72258a3094ef7d3f6ef5fa5dcf6f6a47ad
     dive_bin_checksum: 9988233a21164920882eda6769fcf98969fb2b01fd4442ca022db88e4c4acbf2
