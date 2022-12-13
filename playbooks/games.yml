@@ -30,3 +30,13 @@
         remote: flathub
         name: net.davidotek.pupgui2
         state: present
+
+    - name: install Boxtron & Roberta requirements
+      ansible.builtin.dnf:
+        name:
+          - dosbox-staging
+          - fluid-soundfont-gm
+          - inotify-tools
+          - scummvm
+          - timidity++
+        state: present
