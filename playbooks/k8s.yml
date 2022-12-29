@@ -154,6 +154,15 @@
         group: "{{ username }}"
         mode: 0644
 
+    - name: "add solarized theme on k9s for {{ username }}"
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/derailed/k9s/master/skins/solarized_dark.yml
+        dest: "{{ homedir }}/.config/k9s/skin.yml"
+        checksum: sha256:12192aa206923967b1ee0003a5bbf6d5c6f376bde30354a9ace10bd858448952
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: 0644
+
     - name: "add zsh-kubectl-promt for {{ username }}"
       become_user: "{{ username }}"
       ansible.builtin.git:
