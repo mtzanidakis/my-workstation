@@ -14,6 +14,8 @@
     k9s_version: 0.26.7
     k9s_checksum: sha256:f774bb75045e361e17a4f267491c5ec66f41db7bffd996859ffb1465420af249
     k9s_bin_checksum: 9a4dbb8e339423b3c7cd587f4abdd20351c01af15c8f1546b99f4557199e2c74
+    talosctl_version: 1.3.2
+    talosctl_checksum: sha256:a3589f3c54b5ff767b15c6343c5183e51e34a58c439e8ec340d34fed38143871
 
   tasks:
     - name: enable Google Cloud SDK repo
@@ -169,3 +171,10 @@
         repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
         dest: "{{ homedir }}/.local/share/zsh-kubectl-prompt"
         version: v1.4.0
+
+    - name: "install talosctl {{ talosctl_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/siderolabs/talos/releases/download/v{{ talosctl_version }}/talosctl-linux-amd64"
+        dest: "/usr/local/bin/talosctl"
+        mode: 0555
+        checksum: "{{ talosctl_checksum }}"
