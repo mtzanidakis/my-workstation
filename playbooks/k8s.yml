@@ -11,9 +11,9 @@
     kubens_checksum: sha256:8b3672961fb15f8b87d5793af8bd3c1cca52c016596fbf57c46ab4ef39265fcd
     kubens_bin_checksum: cc376ced21b441efe4d61685830e0ff3ade194c303216d1ca08b72073c556d44
     kubens_comp_checksum: sha256:084c226035af951e582020b2bc055a6521929ee54d8942b4d19577e5d45fd8f7
-    k9s_version: 0.26.7
-    k9s_checksum: sha256:f774bb75045e361e17a4f267491c5ec66f41db7bffd996859ffb1465420af249
-    k9s_bin_checksum: 9a4dbb8e339423b3c7cd587f4abdd20351c01af15c8f1546b99f4557199e2c74
+    k9s_version: 0.27.2
+    k9s_checksum: sha256:8d4bfb9bfee8e28300305746002002b27f47badbd19e25a503d38172006e1170
+    k9s_bin_checksum: 7af55c8c02142a7e1cf3b5393d3eade7c831b083e471adb03982f99e1852c9bc
     talosctl_version: 1.3.2
     talosctl_checksum: sha256:a3589f3c54b5ff767b15c6343c5183e51e34a58c439e8ec340d34fed38143871
 
@@ -119,7 +119,7 @@
 
     - name: "download k9s {{ k9s_version }}"
       ansible.builtin.get_url:
-        url: "https://github.com/derailed/k9s/releases/download/v{{ k9s_version }}/k9s_Linux_x86_64.tar.gz"
+        url: "https://github.com/derailed/k9s/releases/download/v{{ k9s_version }}/k9s_Linux_amd64.tar.gz"
         dest: "/tmp/k9s_Linux_x86_64.tar.gz"
         mode: 0644
         checksum: "{{ k9s_checksum }}"
