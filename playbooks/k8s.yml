@@ -11,9 +11,9 @@
     kubens_checksum: sha256:8b3672961fb15f8b87d5793af8bd3c1cca52c016596fbf57c46ab4ef39265fcd
     kubens_bin_checksum: cc376ced21b441efe4d61685830e0ff3ade194c303216d1ca08b72073c556d44
     kubens_comp_checksum: sha256:084c226035af951e582020b2bc055a6521929ee54d8942b4d19577e5d45fd8f7
-    k9s_version: 0.27.2
-    k9s_checksum: sha256:8d4bfb9bfee8e28300305746002002b27f47badbd19e25a503d38172006e1170
-    k9s_bin_checksum: 7af55c8c02142a7e1cf3b5393d3eade7c831b083e471adb03982f99e1852c9bc
+    k9s_version: 0.27.3
+    k9s_checksum: sha256:b0eb5fb0decedbee5b6bd415f72af8ce6135ffb8128f9709bc7adcd5cbfa690b
+    k9s_bin_checksum: 09a7bb21255f794501946467a333b99d8fe77f1e4c8a91409f75d80723b80fee
     talosctl_version: 1.3.2
     talosctl_checksum: sha256:a3589f3c54b5ff767b15c6343c5183e51e34a58c439e8ec340d34fed38143871
 
