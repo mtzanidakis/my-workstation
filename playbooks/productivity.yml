@@ -1,5 +1,9 @@
 - hosts: all
   become: true
+  vars:
+    noti_version: 3.7.0
+    noti_checksum: sha256:9bc7e1ac18f9c5a5c1c07bcf812a4694380e43c99dd6cde3ab50617e0990c843
+    noti_bin_checksum: b4b5edc6ade547d9cc9e7ec588e6f5540290916e42a7aa9e66d0da517825bbb7
 
   tasks:
     - name: install Bitwarden
@@ -35,3 +39,32 @@
         remote: flathub
         name: us.zoom.Zoom
         state: present
+
+    - name: check if noti is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/noti
+        checksum_algorithm: sha256
+      register: localbinnoti
+
+    - name: "download noti {{ noti_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/variadico/noti/releases/download/{{ noti_version }}/noti{{ noti_version }}.linux-amd64.tar.gz"
+        dest: /tmp/noti.tar.gz
+        mode: 0644
+        checksum: "{{ noti_checksum }}"
+      when: localbinnoti.stat.checksum is not defined or localbinnoti.stat.checksum != noti_bin_checksum
+
+    - name: "unpack noti {{ noti_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/noti.tar.gz"
+        dest: /usr/local/bin
+        include: noti
+        owner: root
+        group: root
+      when: localbinnoti.stat.checksum is not defined or localbinnoti.stat.checksum != noti_bin_checksum
+
+    - name: "delete downloaded noti {{ noti_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/noti_Linux_x86_64.tar.gz"
+        state: absent
+      when: localbinnoti.stat.checksum is not defined or localbinnoti.stat.checksum != noti_bin_checksum
