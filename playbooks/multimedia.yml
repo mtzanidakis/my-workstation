@@ -34,6 +34,7 @@
         name:
           - audacity
           - darktable
+          - espeak
           - gimp
           - HandBrake-gui
           - helvum
