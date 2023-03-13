@@ -1,5 +1,9 @@
 - hosts: all
   become: true
+  vars:
+    ddosify_version: 0.15.0
+    ddosify_checksum: sha256:9abbdf2c0a7ecb3a344c7fd586c9ca273c9f2d32785537c322b6dd603aefaba3
+    ddosify_bin_checksum: 991378646df739123bd1415ff8e581380c61991c08084bb6670212916d2dac68
 
   tasks:
     - name: enable Tailscale repo
@@ -26,3 +30,32 @@
         name: tailscaled
         state: started
         enabled: yes
+
+    - name: check if ddosify is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/ddosify
+        checksum_algorithm: sha256
+      register: localbinddosify
+
+    - name: "download ddosify {{ ddosify_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/ddosify/ddosify/releases/download/v{{ ddosify_version }}/ddosify_{{ ddosify_version }}_linux_amd64.tar.gz"
+        dest: "/tmp/ddosify_linux_amd64.tar.gz"
+        mode: 0644
+        checksum: "{{ ddosify_checksum }}"
+      when: localbinddosify.stat.checksum is not defined or localbinddosify.stat.checksum != ddosify_bin_checksum
+
+    - name: "unpack ddosify {{ ddosify_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/ddosify_linux_amd64.tar.gz"
+        dest: /usr/local/bin
+        include: ddosify
+        owner: root
+        group: root
+      when: localbinddosify.stat.checksum is not defined or localbinddosify.stat.checksum != ddosify_bin_checksum
+
+    - name: "delete downloaded ddosify {{ ddosify_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/ddosify_linux_amd64.tar.gz"
+        state: absent
+      when: localbinddosify.stat.checksum is not defined or localbinddosify.stat.checksum != ddosify_bin_checksum
