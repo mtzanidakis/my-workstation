@@ -3,16 +3,8 @@
   vars:
     compass_version: 1.36.4
     mongo_current: 6.0
-    mongo_old: 5.0
 
   tasks:
-  - name: "remove MongoDB {{ mongo_old }} repo"
-    ansible.builtin.yum_repository:
-      name: "mongodb-org-{{ mongo_old }}"
-      file: "mongodb-org-{{ mongo_old }}"
-      state: absent
-      enabled: false
-
   - name: "add MongoDB {{ mongo_current }} repo"
     ansible.builtin.yum_repository:
       name: "mongodb-org-{{ mongo_current }}"
