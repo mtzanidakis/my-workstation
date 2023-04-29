@@ -37,9 +37,9 @@
       name: mycli
       state: present
 
-  - name: install RESP.app
+  - name: install RedisInsight
     community.general.flatpak:
-      name: app.resp.RESP
+      name: com.redis.RedisInsight
       state: present
 
   - name: install iredis
