@@ -25,7 +25,7 @@ sudo dnf group upgrade --with-optional Multimedia
 
 to install additional multimedia libraries from rpmfusion, like aptX codecs etc.
 
-## Notes for Fedora 37
+## Notes for Fedora 37+
 
 Run
 
@@ -38,4 +38,4 @@ to re-enable hardware accelerated video decoding.
 
 ## Compatibility
 
-Tested on Fedora Workstation 36, 37.
+Tested on Fedora Workstation 36, 37, 38.
