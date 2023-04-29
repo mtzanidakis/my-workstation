@@ -41,10 +41,13 @@
           - neofetch
           - nmap
           - pwgen
+          - remove-retired-packages
           - restic
           - ripgrep
+          - rpmconf
           - solaar
           - sshfs
+          - symlinks
           - transmission
           - wl-clipboard
           - zsh
