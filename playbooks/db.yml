@@ -1,7 +1,7 @@
 - hosts: all
   become: true
   vars:
-    compass_version: 1.34.1
+    compass_version: 1.36.4
     mongo_current: 6.0
     mongo_old: 5.0
 
