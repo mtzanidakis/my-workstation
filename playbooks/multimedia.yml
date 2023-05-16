@@ -24,6 +24,7 @@
           - gstreamer-ffmpeg
           - lame*
           - mozilla-openh264
+          - rocm-opencl
         exclude:
           - gstreamer1-plugins-bad-free-devel
           - lame-devel
