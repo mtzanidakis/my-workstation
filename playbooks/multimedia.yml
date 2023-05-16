@@ -11,6 +11,15 @@
         no_extra_spaces: yes
         mode: 0644
 
+    - name: install rocm stack
+      ansible.builtin.dnf:
+        name:
+          - rocm-clinfo
+          - rocm-device-libs
+          - rocm-opencl
+          - rocminfo
+        state: present
+
     - name: install media plugins
       ansible.builtin.dnf:
         name:
@@ -24,7 +33,6 @@
           - gstreamer-ffmpeg
           - lame*
           - mozilla-openh264
-          - rocm-opencl
         exclude:
           - gstreamer1-plugins-bad-free-devel
           - lame-devel
