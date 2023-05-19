@@ -3,6 +3,9 @@
   vars:
     compass_version: 1.36.4
     mongo_current: 6.0
+    gomigrate_version: 4.15.2
+    gomigrate_checksum: sha256:b8e0a37b3d418a0dd418ff23aaa6866a060fffcec1b155a0b9c523588ff0a607
+    gomigrate_bin_checksum: cc8f72f4afc0ae7d433d9b53cdb1b996c736a11bde0c2fdbc7a4770fcc95ac03
 
   tasks:
   - name: "add MongoDB {{ mongo_current }} repo"
@@ -45,3 +48,32 @@
   - name: install iredis
     ansible.builtin.pip:
       name: iredis
+
+  - name: check if go-migrate is installed
+    ansible.builtin.stat:
+      path: /usr/local/bin/migrate
+      checksum_algorithm: sha256
+    register: localbingomigrate
+
+  - name: "download go-migrate {{ gomigrate_version }}"
+    ansible.builtin.get_url:
+      url: "https://github.com/golang-migrate/migrate/releases/download/v{{ gomigrate_version }}/migrate.linux-amd64.tar.gz"
+      dest: "/tmp/migrate.linux-amd64.tar.gz"
+      mode: 0644
+      checksum: "{{ gomigrate_checksum }}"
+    when: localbingomigrate.stat.checksum is not defined or localbingomigrate.stat.checksum != gomigrate_bin_checksum
+
+  - name: "unpack go-migrate {{ gomigrate_version }}"
+    ansible.builtin.unarchive:
+      src: "/tmp/migrate.linux-amd64.tar.gz"
+      dest: /usr/local/bin
+      include: migrate
+      owner: root
+      group: root
+    when: localbingomigrate.stat.checksum is not defined or localbingomigrate.stat.checksum != gomigrate_bin_checksum
+
+  - name: "delete downloaded {{ gomigrate_version }} tarball"
+    ansible.builtin.file:
+      name: "/tmp/migrate.linux-amd64.tar.gz"
+      state: absent
+    when: localbingomigrate.stat.checksum is not defined or localbingomigrate.stat.checksum != gomigrate_bin_checksum
