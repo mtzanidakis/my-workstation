@@ -32,9 +32,12 @@
           - autofs
           - bat
           - cu
+          - dnf5
+          - fd-find
           - fortune-mod
           - fzf
           - htop
+          - hyperfine
           - keychain
           - lm_sensors
           - ncdu
