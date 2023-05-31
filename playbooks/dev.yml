@@ -42,6 +42,7 @@
           - direnv
           - filezilla
           - gh
+          - glow
           - go-task
           - graphviz
           - neovim
