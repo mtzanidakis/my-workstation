@@ -160,7 +160,7 @@
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/derailed/k9s/master/skins/solarized_dark.yml
         dest: "{{ homedir }}/.config/k9s/skin.yml"
-        checksum: sha256:12192aa206923967b1ee0003a5bbf6d5c6f376bde30354a9ace10bd858448952
+        checksum: sha256:f96fc8fd6c758ca94057f5c31589c01a429ce29c89e6239e44f17aae103d89e6
         owner: "{{ username }}"
         group: "{{ username }}"
         mode: 0644
