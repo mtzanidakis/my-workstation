@@ -55,4 +55,5 @@
           - wl-clipboard
           - zsh
           - zsh-autosuggestions
+          - zstd
         state: present
