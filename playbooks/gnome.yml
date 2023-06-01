@@ -206,3 +206,8 @@
       community.general.flatpak:
         name: com.github.tchx84.Flatseal
         state: present
+
+    - name: add Adwaita dark for legacy apps
+      community.general.flatpak:
+        name: org.gtk.Gtk3theme.Adwaita-dark
+        state: present
