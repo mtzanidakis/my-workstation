@@ -34,6 +34,15 @@
         baseurl: https://repo.goreleaser.com/yum/
         gpgcheck: no
 
+    - name: add Charm repo for glow
+      ansible.builtin.yum_repository:
+        name: charm
+        description: Charm
+        file: charm
+        baseurl: https://repo.charm.sh/yum
+        gpgkey: https://repo.charm.sh/yum/gpg.key
+        gpgcheck: yes
+
     - name: install develop packages
       ansible.builtin.dnf:
         name:
