@@ -11,14 +11,18 @@
         no_extra_spaces: yes
         mode: 0644
 
-    - name: install rocm stack
+    - name: remove rocm stack
       ansible.builtin.dnf:
         name:
+          - hsakmt
+          - lld-libs
           - rocm-clinfo
+          - rocm-comgr
           - rocm-device-libs
           - rocm-opencl
+          - rocm-runtime
           - rocminfo
-        state: present
+        state: absent
 
     - name: install media plugins
       ansible.builtin.dnf:
