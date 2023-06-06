@@ -2,7 +2,9 @@
   become: true
   vars:
     mkcert_version: 1.4.4
-    mkcert_chksum: sha256:6d31c65b03972c6dc4a14ab429f2928300518b26503f58723e532d1b0a3bbb52
+    mkcert_cheksum: sha256:6d31c65b03972c6dc4a14ab429f2928300518b26503f58723e532d1b0a3bbb52
+    fx_version: 24.1.0
+    fx_checksum: sha256:910f788c5f4b329aff9744b5f89e111303ebdc70e233e7f3b860c38941e61a5e
 
   tasks:
     - name: install virtualization group
@@ -99,7 +101,16 @@
         mode: 0755
         owner: root
         group: root
-        checksum: "{{ mkcert_chksum }}"
+        checksum: "{{ mkcert_cheksum }}"
+
+    - name: "install fx {{ fx_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/antonmedv/fx/releases/download/{{ fx_version }}/fx_linux_amd64"
+        dest: /usr/local/bin/fx
+        mode: 0755
+        owner: root
+        group: root
+        checksum: "{{ fx_checksum }}"
 
     - name: remove task package
       ansible.builtin.dnf:
