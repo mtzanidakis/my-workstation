@@ -1,7 +1,7 @@
 - hosts: all
   become: true
   vars:
-    compass_version: 1.36.4
+    compass_version: 1.37.0
     mongo_current: 6.0
     gomigrate_version: 4.15.2
     gomigrate_checksum: sha256:b8e0a37b3d418a0dd418ff23aaa6866a060fffcec1b155a0b9c523588ff0a607
