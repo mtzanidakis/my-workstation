@@ -33,6 +33,7 @@
           - bat
           - cu
           - dnf5
+          - dua-cli
           - fd-find
           - fortune-mod
           - fzf
