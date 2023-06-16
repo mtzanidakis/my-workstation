@@ -23,6 +23,7 @@
           - python3-speedtest-cli
           - rclone
           - tailscale
+          - testssl
         state: present
 
     - name: enable Tailscale daemon
