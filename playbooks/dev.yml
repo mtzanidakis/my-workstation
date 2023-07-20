@@ -60,6 +60,7 @@
           - nodejs
           - nfpm
           - nss-tools
+          - patch
           - php-cli
           - python3-ansible-lint
           - python3-pip
