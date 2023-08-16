@@ -17,6 +17,7 @@ Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'junegunn/fzf.vim'
 Plug 'github/copilot.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vimpostor/vim-lumen'
 call plug#end()
 
 set nocompatible
