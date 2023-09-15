@@ -62,14 +62,14 @@
         name: com.obsproject.Studio
         state: present
 
-    - name: install spotify
-      community.general.flatpak:
-        name: com.spotify.Client
-        state: present
-
     - name: install plex desktop
       community.general.flatpak:
         name: tv.plex.PlexDesktop
+        state: present
+
+    - name: install plexamp
+      community.general.flatpak:
+        name: com.plexamp.Plexamp
         state: present
 
     - name: install shotcut
