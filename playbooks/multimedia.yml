@@ -62,6 +62,11 @@
         name: com.obsproject.Studio
         state: present
 
+    - name: install jailfin desktop
+      community.general.flatpak:
+        name: com.github.iwalton3.jellyfin-media-player
+        state: present
+
     - name: install plex desktop
       community.general.flatpak:
         name: tv.plex.PlexDesktop
