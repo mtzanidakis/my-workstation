@@ -62,7 +62,7 @@
         name: com.obsproject.Studio
         state: present
 
-    - name: install jailfin desktop
+    - name: install jellyfin desktop
       community.general.flatpak:
         name: com.github.iwalton3.jellyfin-media-player
         state: present
