@@ -1,5 +1,9 @@
 - hosts: all
   become: true
+  vars:
+    gocryptfs_version: 2.4.0
+    gocryptfs_tar_checksum: sha256:57f540277816e9bceb9220f9f3604da374df9a6e804696dc72c988dcda710c59
+    gocryptfs_bin_checksum: 5ca700f6e7dde40f8c9c7f85ee7e2c5dd77025443b0dd21f4e172bfb1b6ec5bc
 
   tasks:
     - name: optimize dnf
@@ -58,3 +62,32 @@
           - zsh-autosuggestions
           - zstd
         state: present
+
+    - name: check if gocryptfs is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/gocryptfs
+        checksum_algorithm: sha256
+      register: localbingocryptfs
+
+    - name: "download gocryptfs {{ gocryptfs_version }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/rfjakob/gocryptfs/releases/download/v{{ gocryptfs_version }}/gocryptfs_v{{ gocryptfs_version }}_linux-static_amd64.tar.gz"
+        dest: "/tmp/gocryptfs_v{{ gocryptfs_version }}_linux-static_amd64.tar.gz"
+        mode: 0644
+        checksum: "{{ gocryptfs_tar_checksum }}"
+      when: localbingocryptfs.stat.checksum is not defined or localbingocryptfs.stat.checksum != gocryptfs_bin_checksum
+
+    - name: "unpack gocryptfs {{ gocryptfs_version }}"
+      ansible.builtin.unarchive:
+        src: "/tmp/gocryptfs_v{{ gocryptfs_version }}_linux-static_amd64.tar.gz"
+        dest: /usr/local/bin
+        include: gocryptfs
+        owner: root
+        group: root
+      when: localbingocryptfs.stat.checksum is not defined or localbingocryptfs.stat.checksum != gocryptfs_bin_checksum
+
+    - name: "delete downloaded gocryptfs {{ gocryptfs_version }} tarball"
+      ansible.builtin.file:
+        name: "/tmp/gocryptfs_v{{ gocryptfs_version }}_linux-static_amd64.tar.gz"
+        state: absent
+      when: localbingocryptfs.stat.checksum is not defined or localbingocryptfs.stat.checksum != gocryptfs_bin_checksum
