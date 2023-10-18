@@ -67,20 +67,20 @@
         name: com.github.iwalton3.jellyfin-media-player
         state: present
 
-    - name: install plex desktop
+    - name: uninstall plex desktop
       community.general.flatpak:
         name: tv.plex.PlexDesktop
-        state: present
+        state: absent
 
-    - name: install plexamp
+    - name: uninstall plexamp
       community.general.flatpak:
         name: com.plexamp.Plexamp
-        state: present
+        state: absent
 
-    - name: install shotcut
+    - name: uninstall shotcut
       community.general.flatpak:
         name: org.shotcut.Shotcut
-        state: present
+        state: absent
 
     - name: remove NoiseTorch
       ansible.builtin.dnf:
