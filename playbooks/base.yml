@@ -92,3 +92,9 @@
         name: "/tmp/gocryptfs_v{{ gocryptfs_version }}_linux-static_amd64.tar.gz"
         state: absent
       when: localbingocryptfs.stat.checksum is not defined or localbingocryptfs.stat.checksum != gocryptfs_bin_checksum
+
+    - name: install warehouse
+      community.general.flatpak:
+        remote: flathub
+        name: io.github.flattool.Warehouse
+        state: present
