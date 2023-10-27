@@ -7,6 +7,12 @@
     fx_checksum: sha256:910f788c5f4b329aff9744b5f89e111303ebdc70e233e7f3b860c38941e61a5e
 
   tasks:
+    - name: install development tools group
+      ansible.builtin.dnf:
+        name:
+          - "@Development Tools"
+        state: present
+
     - name: install virtualization group
       ansible.builtin.dnf:
         name:
