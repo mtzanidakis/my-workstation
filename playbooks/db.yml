@@ -77,3 +77,18 @@
       name: "/tmp/migrate.linux-amd64.tar.gz"
       state: absent
     when: localbingomigrate.stat.checksum is not defined or localbingomigrate.stat.checksum != gomigrate_bin_checksum
+
+  - name: add TablePlus repo
+    ansible.builtin.yum_repository:
+      name: "tableplus"
+      description: TablePlus - x86_64 - Stable
+      file: "tableplus"
+      baseurl: https://yum.tableplus.com/rpm/x86_64
+      gpgkey: https://yum.tableplus.com/apt.tableplus.com.gpg.key
+      gpgcheck: yes
+
+  - name: install TablePlus
+    ansible.builtin.dnf:
+      name:
+        - tableplus
+      state: present
