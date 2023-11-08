@@ -55,6 +55,7 @@
           - mpv
           - pavucontrol
           - vlc
+          - xwaylandvideobridge
         state: present
 
     - name: install OBS Studio
